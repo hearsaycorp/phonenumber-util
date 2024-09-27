@@ -1,0 +1,40 @@
+{
+  "name": "phonenumber-util",
+  "version": "0.1.0",
+  "author": "bajohnson@hearsaycorp.com",
+  "license": "BSD-3-Clause",
+  "description": "Utility for extracting and validating phone numbers",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hearsaycorp/phonenumber-util.git"
+  },
+  "scripts": {
+    "lint": "eslint **/*.js **/__tests__/*.js",
+    "format": "prettier --write **/*.js **/__tests__/*.js",
+    "test": "vitest",
+    "build": "node -e \"console.log('No build script for vanilla JS')\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@vitest/coverage-v8": "^2.1.1",
+    "eslint": "^9.7.0",
+    "globals": "^15.8.0",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "vitest": "^2.1.1"
+  },
+  "eslintConfig": {},
+  "lint-staged": {
+    "**/*.js": [
+      "npm run lint"
+    ],
+    "**/*.{js,json,md}": [
+      "npm run format"
+    ]
+  }
+}
