@@ -47,7 +47,7 @@ Returns a boolean based on whether the passed number is presumed to be valid or 
 This checks for region code, number length and validity of region code and area code (where applicable).
 
 ```javascript
-import { isValidPhoneNumber } from '@hearsaycorp/libphonenumber';
+import { isValidPhoneNumber } from 'phonenumber-util';
 const validPhoneNumber = '3103496333';
 isValidPhoneNumber(validPhoneNumber); // Returns `true` - "310" is an area code for California
 
@@ -66,7 +66,7 @@ isValidPhoneNumber(invalidIntlNumber); // Returns `false` - "666" is not a valid
 Return an object of relevant phone number parts and information.
 
 ```javascript
-import { getPhoneParts } from '@hearsaycorp/libphonenumber';
+import { getPhoneParts } from 'phonenumber-util';
 const validPhoneNumber = '3496333';
 getPhoneParts(validPhoneNumber); // Returns an object, assumed to be US / Canada, region code "1" but no area code can be reliably determined.
 
