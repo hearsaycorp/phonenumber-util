@@ -1,4 +1,4 @@
-import { AREA_CODE_LIST, REGION_CODE_LIST } from './phoneCodeLists.js';
+import { AREA_CODE_LIST } from './areaCodeList.js';
 import { PHONE_FORMATS } from './phoneFormats.js';
 
 const DASHES = '-\u2010-\u2015\u2212\u30FC\uFF0D';
@@ -175,7 +175,7 @@ export const getPhoneParts = (phoneNumber) => {
           let match = strippedPhoneNumber.match(
             new RegExp(`^\\+(\\d{${length}})(\\d+)`),
           );
-          if (match && REGION_CODE_LIST.indexOf(match[1]) !== -1) {
+          if (match && PHONE_FORMATS[match[1]]) {
             phoneParts.regionCode = match[1];
             phoneParts.localNumber = match[2];
             break;
