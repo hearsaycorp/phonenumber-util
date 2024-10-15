@@ -1,5 +1,5 @@
 {
-  "name": "phonenumber-util",
+  "name": "@yext/phonenumber-util",
   "version": "0.1.0",
   "author": "bajohnson@hearsaycorp.com",
   "license": "BSD-3-Clause",
