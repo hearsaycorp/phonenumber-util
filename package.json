@@ -7,6 +7,7 @@
   "type": "module",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hearsaycorp/phonenumber-util.git"
