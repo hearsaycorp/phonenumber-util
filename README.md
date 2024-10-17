@@ -70,7 +70,7 @@ import { getPhoneParts } from '@yext/phonenumber-util';
 const validPhoneNumber = '3496333';
 getPhoneParts(validPhoneNumber); // Returns an object, assumed to be US / Canada, region code "1" but no area code can be reliably determined.
 
-const validPhoneNumber = '"+923331234567"';
+const validPhoneNumber = '+923331234567';
 getPhoneParts(validPhoneNumber); // Returns an object, assumed to be Pakistan, region code "92".
 ```
 
