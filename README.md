@@ -47,7 +47,7 @@ Returns a boolean based on whether the passed number is presumed to be valid or 
 This checks for region code, number length and validity of region code and area code (where applicable).
 
 ```javascript
-import { isValidPhoneNumber } from 'phonenumber-util';
+import { isValidPhoneNumber } from '@yext/phonenumber-util';
 const validPhoneNumber = '3103496333';
 isValidPhoneNumber(validPhoneNumber); // Returns `true` - "310" is an area code for California
 
@@ -66,7 +66,7 @@ isValidPhoneNumber(invalidIntlNumber); // Returns `false` - "666" is not a valid
 Return an object of relevant phone number parts and information.
 
 ```javascript
-import { getPhoneParts } from 'phonenumber-util';
+import { getPhoneParts } from '@yext/phonenumber-util';
 const validPhoneNumber = '3496333';
 getPhoneParts(validPhoneNumber); // Returns an object, assumed to be US / Canada, region code "1" but no area code can be reliably determined.
 
@@ -150,4 +150,95 @@ Example for US with no area code provided ("Hey there, my number is 349.9999. Pl
 
 ```javascript
 [];
+```
+
+## Geography / Time Functionality
+
+In addition to the above methods, the following methods are also available via a different export.
+
+There is additional functionality exposed as `export`, but the primary expected use case is:
+
+#### findTimeFromAreaCode
+
+Returns an object with geographic and time related information for a given region.
+
+_NOTE:_ This is only applicable for United States and Canada.
+
+```javascript
+import { findTimeFromAreaCode } from '@yext/phonenumber-util';
+findTimeFromAreaCode('928');
+```
+
+Example output for Arizona:
+
+```javascript
+{
+  areaCodeHasMultipleTimezones: false,
+  daylightSavings: true,
+  estimatedTime: true,
+  isQuietHours: false,
+  isTCPAQuietHours: false,
+  localTime24Hour: "15:00:00",
+  localTimeReadable: "3:00:00 PM",
+  region: {
+    code: "US",
+    flag: "🇺🇸",
+    name: "United States"
+  },
+  state: {
+    code: "AZ",
+    name: "Arizona"
+  },
+  stateHasMultipleTimezones: false,
+  timezoneOffset: "-07:00"
+}
+```
+
+```javascript
+import { findTimeFromAreaCode } from '@yext/phonenumber-util';
+findTimeFromAreaCode('250');
+```
+
+Example output for British Columbia:
+
+```javascript
+{
+  areaCodeHasMultipleTimezones: true,
+  daylightSavings: true,
+  estimatedTime: true,
+  isCRTCQuietHours: false,
+  isQuietHours: false,
+  localTime24Hour: "17:00:00",
+  localTimeReadable: "5:00:00 PM",
+  region: {
+    code: "CA",
+    flag: "🇨🇦",
+    name: "Canada"
+  },
+  state: {
+    code: "BC",
+    name: "British Columbia"
+  },
+  stateHasMultipleTimezones: true,
+  timezoneOffset: "-07:00"
+}
+```
+
+#### findRegionFromRegionCode
+
+```javascript
+import { findRegionFromRegionCode } from '@yext/phonenumber-util';
+findRegionFromRegionCode('47');
+```
+
+Returns the string name of a given region name based on region code provided.
+
+_NOTE:_ This string is provided in English only (example: "Norway" and not the region-specific name "Norge").
+
+```javascript
+{
+  code: "NO/SJ",
+  flag: "🇳🇴",
+  name: "Norway, Svalbard and Jan Mayen"
+}
 ```
