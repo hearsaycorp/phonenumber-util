@@ -109,7 +109,7 @@ Example for US with full area code provided ("310.349.9999"):
 ```javascript
 {
   areaCode: "310",
-  e164: "+13103103499999",
+  e164: "+13103499999",
   format: "(xxx) xxx-xxxx",
   formattedNumber: "(310) 349-9999",
   href: "tel:+13103499999",
@@ -133,7 +133,7 @@ Example for US with full area code provided ("Hey there, my number is 310.349.99
     index: 24,
     lastIndex: 36,
     areaCode: '310',
-    e164: '+13103103499999',
+    e164: '+13103499999',
     format: '(xxx) xxx-xxxx',
     formattedNumber: '(310) 349-9999',
     href: 'tel:+13103499999',
