@@ -84,6 +84,7 @@ export const AREA_CODES = {
   656: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   689: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   727: { name: 'Florida', code: 'FL', region: UNITED_STATES },
+  728: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   754: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   772: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   786: { name: 'Florida', code: 'FL', region: UNITED_STATES },
