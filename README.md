@@ -47,7 +47,7 @@ Returns a boolean based on whether the passed number is presumed to be valid or 
 This checks for region code, number length and validity of region code and area code (where applicable).
 
 ```javascript
-import { isValidPhoneNumber } from 'phonenumber-util';
+import { isValidPhoneNumber } from '@yext/phonenumber-util';
 const validPhoneNumber = '3103496333';
 isValidPhoneNumber(validPhoneNumber); // Returns `true` - "310" is an area code for California
 
@@ -66,7 +66,7 @@ isValidPhoneNumber(invalidIntlNumber); // Returns `false` - "666" is not a valid
 Return an object of relevant phone number parts and information.
 
 ```javascript
-import { getPhoneParts } from 'phonenumber-util';
+import { getPhoneParts } from '@yext/phonenumber-util';
 const validPhoneNumber = '3496333';
 getPhoneParts(validPhoneNumber); // Returns an object, assumed to be US / Canada, region code "1" but no area code can be reliably determined.
 
@@ -109,7 +109,7 @@ Example for US with full area code provided ("310.349.9999"):
 ```javascript
 {
   areaCode: "310",
-  e164: "+13103103499999",
+  e164: "+13103499999",
   format: "(xxx) xxx-xxxx",
   formattedNumber: "(310) 349-9999",
   href: "tel:+13103499999",
@@ -133,7 +133,7 @@ Example for US with full area code provided ("Hey there, my number is 310.349.99
     index: 24,
     lastIndex: 36,
     areaCode: '310',
-    e164: '+13103103499999',
+    e164: '+13103499999',
     format: '(xxx) xxx-xxxx',
     formattedNumber: '(310) 349-9999',
     href: 'tel:+13103499999',
