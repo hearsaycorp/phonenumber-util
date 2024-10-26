@@ -7,7 +7,7 @@ import {
   findNumbersInString,
   findPhoneFormat,
   formatPhoneNumber,
-} from '../index.js';
+} from '../base.js';
 import { describe, it, expect } from 'vitest';
 
 const testNumbers = {

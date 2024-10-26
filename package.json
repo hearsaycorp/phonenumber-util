@@ -5,7 +5,11 @@
   "license": "BSD-3-Clause",
   "description": "Utility for extracting and validating phone numbers",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src",
+  "exports": {
+    ".": "./src/base.js",
+    "./geo": "./src/geo.js"
+  },
   "types": "src/index.d.ts",
   "repository": {
     "type": "git",

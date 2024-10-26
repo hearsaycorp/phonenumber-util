@@ -165,7 +165,7 @@ Returns an object with geographic and time related information for a given regio
 _NOTE:_ This is only applicable for United States and Canada.
 
 ```javascript
-import { findTimeFromAreaCode } from '@yext/phonenumber-util';
+import { findTimeFromAreaCode } from '@yext/phonenumber-util/geo';
 findTimeFromAreaCode('928');
 ```
 
@@ -195,7 +195,7 @@ Example output for Arizona:
 ```
 
 ```javascript
-import { findTimeFromAreaCode } from '@yext/phonenumber-util';
+import { findTimeFromAreaCode } from '@yext/phonenumber-util/geo';
 findTimeFromAreaCode('250');
 ```
 
@@ -227,7 +227,7 @@ Example output for British Columbia:
 #### findRegionFromRegionCode
 
 ```javascript
-import { findRegionFromRegionCode } from '@yext/phonenumber-util';
+import { findRegionFromRegionCode } from '@yext/phonenumber-util/geo';
 findRegionFromRegionCode('47');
 ```
 

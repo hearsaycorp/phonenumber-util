@@ -5,7 +5,7 @@ import {
   findTimeDetails,
   findTimeFromAreaCode,
   findRegionFromRegionCode,
-} from '../index.js';
+} from '../geo.js';
 import { describe, it, expect } from 'vitest';
 
 const invalidPhone = {
