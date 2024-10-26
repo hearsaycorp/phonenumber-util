@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "eslint **/*.js **/__tests__/*.js",
     "format": "prettier --write **/*.js **/__tests__/*.js",
-    "test": "vitest",
+    "test": "TZ=America/Los_Angeles vitest",
     "build": "node -e \"console.log('No build script for vanilla JS')\"",
     "prepare": "husky"
   },
