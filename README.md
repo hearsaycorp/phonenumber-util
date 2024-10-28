@@ -237,8 +237,8 @@ _NOTE:_ This string is provided in English only (example: "Norway" and not the r
 
 ```javascript
 {
-  code: "NO/SJ",
+  code: "NO",
   flag: "🇳🇴",
-  name: "Norway, Svalbard and Jan Mayen"
+  name: "Norway"
 }
 ```
