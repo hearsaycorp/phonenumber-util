@@ -120,6 +120,7 @@ export const STATES_WITH_MULTIPLE_TIMEZONES = {
   },
   Tennessee: {
     423: ['-05:00', '-06:00'],
+    729: ['-05:00', '-06:00'],
     865: ['-05:00', '-06:00'],
   },
   Texas: {
