@@ -186,7 +186,8 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
       returnTime.areaCodeHasMultipleTimezones = false;
     }
   } else {
-    returnTime.stateHasMultipleTimezones = false;
+    returnTime.stateHasMultipleTimezones =
+      !!STATES_WITH_MULTIPLE_TIMEZONES[stateName];
     returnTime.areaCodeHasMultipleTimezones = false;
     localOffset = STATE_TIMEZONES[stateName];
   }

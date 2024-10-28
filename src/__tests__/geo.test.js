@@ -37,6 +37,27 @@ const seattlePhone = {
   },
 };
 
+const portlandPhone = {
+  areaCodeHasMultipleTimezones: false,
+  daylightSavings: true,
+  estimatedTime: false,
+  isQuietHours: false,
+  isTCPAQuietHours: false,
+  localTime24Hour: '08:00:00',
+  localTimeReadable: '8:00:00 AM',
+  stateHasMultipleTimezones: true,
+  timezoneOffset: '-07:00',
+  state: {
+    name: 'Oregon',
+    code: 'OR',
+  },
+  region: {
+    name: 'United States',
+    code: 'US',
+    flag: '🇺🇸',
+  },
+};
+
 const arizonaPhoneJul = {
   areaCodeHasMultipleTimezones: false,
   daylightSavings: true,
@@ -250,6 +271,9 @@ describe('Provides general time information for the given phone number (US and C
     expect(
       findTimeFromAreaCode('206', new Date('2024-07-15T08:00:00')),
     ).toEqual(seattlePhone);
+    expect(
+      findTimeFromAreaCode('503', new Date('2024-07-15T08:00:00')),
+    ).toEqual(portlandPhone);
     expect(
       findTimeFromAreaCode('928', new Date('2024-07-15T08:00:00')),
     ).toEqual(arizonaPhoneJul);

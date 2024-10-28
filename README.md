@@ -196,7 +196,7 @@ Example output for Arizona:
 
 ```javascript
 import { findTimeFromAreaCode } from '@yext/phonenumber-util/geo';
-findTimeFromAreaCode('250');
+findTimeFromAreaCode('250', date); // A date object is optional, defaulting to the current time.
 ```
 
 Example output for British Columbia:
