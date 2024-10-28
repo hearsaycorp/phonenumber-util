@@ -579,7 +579,7 @@ export const REGION_CODES = {
   234: { name: 'Nigeria', code: 'NG', flag: '🇳🇬' },
   683: { name: 'Niue', code: 'NU', flag: '🇳🇺' },
   850: { name: 'North Korea', code: 'KP', flag: '🇰🇵' },
-  47: { name: 'Norway, Svalbard and Jan Mayen', code: 'NO/SJ', flag: '🇳🇴' },
+  47: { name: 'Norway', code: 'NO', flag: '🇳🇴' },
   968: { name: 'Oman', code: 'OM', flag: '🇴🇲' },
   92: { name: 'Pakistan', code: 'PK', flag: '🇵🇰' },
   680: { name: 'Palau', code: 'PW', flag: '🇵🇼' },
