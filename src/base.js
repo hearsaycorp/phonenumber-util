@@ -234,18 +234,6 @@ export const getPhoneParts = (phoneNumber) => {
     phoneParts.e164 = formatPhoneNumberForE164(phoneParts);
     phoneParts.format = findPhoneFormat(phoneParts);
     phoneParts.formattedNumber = formatPhoneNumber(phoneParts);
-
-    // If there are left over x's, the formatting ran into something unexpected.
-    // This may be ok depending on the region and their phone number formats.
-    // But it does mean we don't want to display this number.
-    if (
-      phoneParts.formattedNumber &&
-      phoneParts.formattedNumber.indexOf('x') !== -1
-    ) {
-      // Since `rawNumber` isn't sanitized, we'll use a simple format that we
-      // are assured to be safe.
-      phoneParts.formattedNumber = strippedPhoneNumber;
-    }
   }
 
   return phoneParts;
@@ -353,15 +341,25 @@ export const findPhoneFormat = ({ regionCode, e164 }) => {
  * @param {Object} params - The parameters for formatting the phone number.
  * @param {string} params.format - The desired format for the phone number. Example: `(xxx) xxx-xxxx`.
  * @param {string} params.e164 - The E.164 formatted phone number to format. Example: `+12065551234`.
+ * @param {string} params.regionCode - The region code of the phone number.  Example, the US would be "1".
  * @returns {string|null} The formatted phone number, or null if the E.164 number or format is not provided.
  */
-export const formatPhoneNumber = ({ format, e164 }) => {
+export const formatPhoneNumber = ({ format, e164, regionCode }) => {
   let formattedNumber = '';
 
   if (e164 && format) {
     // Remove the leading '+' and let the format handle it.
-    const strippedPhone = e164.replace(/\D/g, '');
+    const strippedPhone = e164.replace(/\+/g, '');
     let phoneIndex = strippedPhone.length - 1;
+
+    // The US / NANP rarely includes region code prefix when sharing numbers.  Other regions often do, so we'll have a special condition to allow ignoring of the region code for region 1.
+    // For other regions, we'll return the stripped number to safely display the presumed good number that may be in a safe but not-ideal format.
+    if (
+      regionCode !== '1' &&
+      strippedPhone.length !== format.split('x').length - 1
+    ) {
+      return e164;
+    }
 
     // Traverse backward so we can omit country code in some formats (like US).
     for (let i = format.length; i >= 0; i--) {
