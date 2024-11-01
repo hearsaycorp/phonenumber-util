@@ -21,14 +21,17 @@
     "format": "prettier --write **/*.js **/__tests__/*.js",
     "test": "TZ=America/Los_Angeles vitest",
     "build": "node -e \"console.log('No build script for vanilla JS')\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "make-badges": "istanbul-badges-readme"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
     "@vitest/coverage-v8": "^2.1.1",
     "eslint": "^9.7.0",
+    "generate-license-file": "^3.5.1",
     "globals": "^15.8.0",
     "husky": "^9.1.5",
+    "istanbul-badges-readme": "^1.9.0",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "vitest": "^2.1.1"
