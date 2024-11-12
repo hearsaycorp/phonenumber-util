@@ -389,6 +389,7 @@ export const AREA_CODES = {
     state: 'NS/PE',
     region: CANADA,
   },
+  226: { name: 'Ontario', code: 'ON', region: CANADA },
   289: { name: 'Ontario', code: 'ON', region: CANADA },
   343: { name: 'Ontario', code: 'ON', region: CANADA },
   365: { name: 'Ontario', code: 'ON', region: CANADA },
