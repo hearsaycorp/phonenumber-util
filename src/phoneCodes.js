@@ -492,7 +492,11 @@ export const REGION_CODES = {
   235: { name: 'Chad', code: 'TD', flag: '🇹🇩' },
   56: { name: 'Chile', code: 'CL', flag: '🇨🇱' },
   86: { name: 'China', code: 'CN', flag: '🇨🇳' },
-  61: { name: 'Christmas Island, Cocos Islands', code: 'CX', flag: '🇨🇽' },
+  61: {
+    name: 'Australia, Christmas Island, Cocos Islands',
+    code: 'AU/CX',
+    flag: '🇦🇺/🇨🇽',
+  },
   57: { name: 'Colombia', code: 'CO', flag: '🇨🇴' },
   269: { name: 'Comoros', code: 'KM', flag: '🇰🇲' },
   682: { name: 'Cook Islands', code: 'CK', flag: '🇨🇰' },
