@@ -256,6 +256,7 @@ export const AREA_CODES = {
   216: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
   220: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
   234: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
+  283: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
   326: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
   330: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
   380: { name: 'Ohio', code: 'OH', region: UNITED_STATES },
