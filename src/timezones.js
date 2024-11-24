@@ -1,3 +1,6 @@
+// Default timezone for each state, region or province.
+// While some region may have multiple timezones, we set the most common one here as a default.  See STATES_WITH_MULTIPLE_TIMEZONES below for references to exceptions within these regions.
+// Time calculations are only provided for US and Canada.
 export const STATE_TIMEZONES = {
   Alabama: '-06:00',
   Alaska: '-09:00',

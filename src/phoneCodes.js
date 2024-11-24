@@ -422,7 +422,6 @@ export const AREA_CODES = {
     region: CANADA,
   },
   // Other North American Numbering Plan (NANP) Numbers
-  // These will return "United States, Canada" as the region, which is incorrect, but they follow the same standard.
   684: { region: { name: 'American Samoa', code: 'AS', flag: '🇦🇸' } },
   264: { region: { name: 'Anguilla', code: 'AI', flag: '🇦🇮' } },
   268: { region: { name: 'Antigua and Barbuda', code: 'AG', flag: '🇦🇬' } },

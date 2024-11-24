@@ -1,3 +1,5 @@
+// For each region, provide a pretty format.  Some regions may have multiple formats, in which case an array can be used.  Each "x" will be replaced with a digit when the number of digits matches the number of "x"s in the format.
+// If no format is found with a correct matching length, a sanitized e164 is returned as a fall-back.
 export const PHONE_FORMATS = {
   1: '(xxx) xxx-xxxx', // United States
   7: '+x xxx xxx-xx-xx', // Russia

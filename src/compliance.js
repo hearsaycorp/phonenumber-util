@@ -1,3 +1,4 @@
+// Compliance settings are used to define quiet hours for the US (using TCPA) and Canada (using CRTC).
 export const TCPA_QUIET_HOURS = {
   start: 8,
   end: 21,
@@ -14,6 +15,7 @@ export const CRTC_QUIET_HOURS = {
   },
 };
 
+// The strings of CRTC_STATES must match the `name` field found within AREA_CODES object in phoneCodes.js.
 export const CRTC_STATES = [
   'Alberta',
   'British Columbia',
