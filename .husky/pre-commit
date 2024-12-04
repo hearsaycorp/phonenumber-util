@@ -3,6 +3,6 @@
 
 npx lint-staged
 npm run format
-npx vitest run --coverage
+TZ=America/Los_Angeles npx vitest run --coverage
 npm run make-badges
 npx generate-license-file --input package.json --output THIRD-PARTY-NOTICES --overwrite
