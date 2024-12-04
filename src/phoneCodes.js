@@ -6,6 +6,7 @@ export const AREA_CODES = {
   // Toll Free / Not Geographic
   800: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   833: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  844: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   888: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   877: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   866: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
