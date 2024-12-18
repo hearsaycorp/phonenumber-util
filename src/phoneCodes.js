@@ -157,6 +157,7 @@ export const AREA_CODES = {
   504: { name: 'Louisiana', code: 'LA', region: UNITED_STATES },
   985: { name: 'Louisiana', code: 'LA', region: UNITED_STATES },
   207: { name: 'Maine', code: 'ME', region: UNITED_STATES },
+  227: { name: 'Maryland', code: 'MD', region: UNITED_STATES },
   240: { name: 'Maryland', code: 'MD', region: UNITED_STATES },
   301: { name: 'Maryland', code: 'MD', region: UNITED_STATES },
   410: { name: 'Maryland', code: 'MD', region: UNITED_STATES },
