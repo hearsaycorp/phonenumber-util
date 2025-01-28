@@ -9,7 +9,7 @@ Utility for extracting and validating phone numbers. Extracts an array of phone 
 
 ### Scripts
 
-#### Install dependencies
+#### Install devDependencies
 
 ```bash
 npm i
