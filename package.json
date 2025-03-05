@@ -25,19 +25,16 @@
     "make-badges": "istanbul-badges-readme"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
-    "@vitest/coverage-v8": "^3.0.5",
-    "eslint": "^9.20.1",
+    "@eslint/js": "^9.21.0",
+    "@vitest/coverage-v8": "^3.0.7",
+    "eslint": "^9.21.0",
     "generate-license-file": "^3.7.0",
-    "globals": "^15.14.0",
+    "globals": "^16.0.0",
     "husky": "^9.1.7",
     "istanbul-badges-readme": "^1.9.0",
     "lint-staged": "^15.4.3",
-    "prettier": "^3.5.0",
-    "vitest": "^3.0.5"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.34.9"
+    "prettier": "^3.5.3",
+    "vitest": "^3.0.7"
   },
   "eslintConfig": {},
   "lint-staged": {
