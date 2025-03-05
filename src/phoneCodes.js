@@ -36,6 +36,7 @@ export const AREA_CODES = {
   341: { name: 'California', code: 'CA', region: UNITED_STATES },
   350: { name: 'California', code: 'CA', region: UNITED_STATES },
   357: { name: 'California', code: 'CA', region: UNITED_STATES },
+  369: { name: 'California', code: 'CA', region: UNITED_STATES },
   408: { name: 'California', code: 'CA', region: UNITED_STATES },
   415: { name: 'California', code: 'CA', region: UNITED_STATES },
   424: { name: 'California', code: 'CA', region: UNITED_STATES },
