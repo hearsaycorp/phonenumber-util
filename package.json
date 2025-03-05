@@ -1,6 +1,6 @@
 {
   "name": "@yext/phonenumber-util",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "author": "bajohnson@hearsaycorp.com",
   "license": "BSD-3-Clause",
   "description": "Utility for extracting and validating phone numbers",
@@ -35,6 +35,9 @@
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.0",
     "vitest": "^3.0.5"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.34.9"
   },
   "eslintConfig": {},
   "lint-staged": {
