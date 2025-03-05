@@ -36,6 +36,9 @@
     "prettier": "^3.5.0",
     "vitest": "^3.0.5"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.34.9"
+  },
   "eslintConfig": {},
   "lint-staged": {
     "**/*.js": [
