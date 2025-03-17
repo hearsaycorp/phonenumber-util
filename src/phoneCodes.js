@@ -5,12 +5,194 @@ const CANADA = { name: 'Canada', code: 'CA', flag: '🇨🇦' };
 export const AREA_CODES = {
   // Toll Free / Not Geographic
   800: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  822: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   833: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   844: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
-  888: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
-  877: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
-  866: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
   855: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  866: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  877: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  880: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  881: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  882: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  883: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  884: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  885: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  886: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  887: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  888: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  889: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
+  900: {
+    name: 'Premium Call Services',
+    region: { name: 'United States', code: 'US' },
+  },
+  500: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  521: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  522: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  523: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  524: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  525: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  526: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  527: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  528: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  529: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  532: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  533: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  535: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  538: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  542: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  543: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  544: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  545: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  546: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  547: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  549: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  550: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  552: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  553: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  554: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  556: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  558: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  566: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  569: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  577: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  578: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  588: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  589: {
+    name: 'Personal Communication Service',
+    region: { name: 'United States', code: 'US' },
+  },
+  600: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  622: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  633: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  644: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  655: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  677: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  688: {
+    name: 'Canadian Special Services',
+    region: { name: 'Canada', code: 'CA' },
+  },
+  700: {
+    name: 'Interexchange carrier-specific services',
+    region: { name: 'United States', code: 'US' },
+  },
+  710: {
+    name: 'US Government Special Services',
+    region: { name: 'United States', code: 'US' },
+  },
   // US Numbers
   205: { name: 'Alabama', code: 'AL', region: UNITED_STATES },
   251: { name: 'Alabama', code: 'AL', region: UNITED_STATES },
@@ -88,6 +270,7 @@ export const AREA_CODES = {
   407: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   448: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   561: { name: 'Florida', code: 'FL', region: UNITED_STATES },
+  645: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   656: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   689: { name: 'Florida', code: 'FL', region: UNITED_STATES },
   727: { name: 'Florida', code: 'FL', region: UNITED_STATES },
@@ -124,6 +307,7 @@ export const AREA_CODES = {
   618: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
   630: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
   708: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
+  730: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
   773: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
   779: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
   815: { name: 'Illinois', code: 'IL', region: UNITED_STATES },
@@ -227,6 +411,7 @@ export const AREA_CODES = {
   575: { name: 'New Mexico', code: 'NM', region: UNITED_STATES },
   212: { name: 'New York', code: 'NY', region: UNITED_STATES },
   315: { name: 'New York', code: 'NY', region: UNITED_STATES },
+  329: { name: 'New York', code: 'NY', region: UNITED_STATES },
   332: { name: 'New York', code: 'NY', region: UNITED_STATES },
   347: { name: 'New York', code: 'NY', region: UNITED_STATES },
   363: { name: 'New York', code: 'NY', region: UNITED_STATES },
@@ -346,6 +531,7 @@ export const AREA_CODES = {
   434: { name: 'Virginia', code: 'VA', region: UNITED_STATES },
   540: { name: 'Virginia', code: 'VA', region: UNITED_STATES },
   571: { name: 'Virginia', code: 'VA', region: UNITED_STATES },
+  686: { name: 'Virginia', code: 'VA', region: UNITED_STATES },
   703: { name: 'Virginia', code: 'VA', region: UNITED_STATES },
   757: { name: 'Virginia', code: 'VA', region: UNITED_STATES },
   804: { name: 'Virginia', code: 'VA', region: UNITED_STATES },

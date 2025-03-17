@@ -17,6 +17,7 @@ export const CRTC_QUIET_HOURS = {
 
 // The strings of CRTC_STATES must match the `name` field found within AREA_CODES object in phoneCodes.js.
 export const CRTC_STATES = [
+  'Canadian Special Services',
   'Alberta',
   'British Columbia',
   'Manitoba',
