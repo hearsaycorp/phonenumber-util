@@ -239,7 +239,7 @@ describe('Phone number pretty formatting', () => {
     expect(formatPhoneNumber(testNumbers.nullCase)).toBe(null);
     expect(formatPhoneNumber(testNumbers.us)).toBe('(310) 349-6200');
     expect(formatPhoneNumber(testNumbers.colombia)).toBe('+57 321 123 4567');
-    expect(formatPhoneNumber(testNumbers.germanyAlt)).toBe('+49 17 08765432');
+    expect(formatPhoneNumber(testNumbers.germanyAlt)).toBe('+49 170 8765432');
     // This looks like a Norwegian number, but doesn't match a known format.  In this case, we'll return a sanitized generic format.
     expect(formatPhoneNumber(testNumbers.norwayUnexpected)).toBe(
       '+47174087654',
