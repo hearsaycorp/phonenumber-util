@@ -1,6 +1,6 @@
 {
   "name": "@yext/phonenumber-util",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": "bajohnson@hearsaycorp.com",
   "license": "BSD-3-Clause",
   "description": "Utility for extracting and validating phone numbers",
@@ -32,7 +32,7 @@
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "istanbul-badges-readme": "^1.9.0",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
     "vitest": "^3.1.1"
   },
