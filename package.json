@@ -17,8 +17,8 @@
     "url": "git+https://github.com/hearsaycorp/phonenumber-util.git"
   },
   "scripts": {
-    "lint": "eslint **/*.js **/__tests__/*.js",
-    "format": "prettier --write **/*.js **/__tests__/*.js",
+    "lint": "eslint ./src/*.js ./src/**/*.js",
+    "format": "prettier --write ./src/*.js ./src/**/*.js",
     "test": "TZ=America/Los_Angeles vitest",
     "build": "node -e \"console.log('No build script for vanilla JS')\"",
     "prepare": "husky",
