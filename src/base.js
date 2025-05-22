@@ -162,8 +162,8 @@ export const getPhoneParts = (phoneNumber) => {
         strippedPhoneNumber.startsWith('+1')
       ) {
         phoneParts.regionCode = '1';
-        phoneParts.localNumber = strippedPhoneNumber.slice(2); // Strip out the "+1"
-        phoneParts.areaCode = phoneParts.localNumber.slice(0, 3); // Grab the area code
+        phoneParts.areaCode = strippedPhoneNumber.slice(2, 5);
+        phoneParts.localNumber = strippedPhoneNumber.slice(5);
       }
       // Otherwise, an intl number which may have 1, 2 or 3 digit region
       else if (
