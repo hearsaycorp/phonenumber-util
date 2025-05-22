@@ -130,6 +130,8 @@ describe('Phone number formatting', () => {
     expect(getPhoneParts('+33 7 56 78 90 12').formattedNumber).toBe(
       '+33 7 56 78 90 12',
     );
+    // US number with +1 prefix
+    expect(getPhoneParts('+17033354245').localNumber).toBe('3354245');
   });
 });
 
@@ -170,6 +172,12 @@ describe('Creation of phone links for href', () => {
         localNumber: '3496200',
         rawNumber: '(310) 349-6200',
       },
+      usIntl: {
+        regionCode: '1',
+        areaCode: '310',
+        localNumber: '3496200',
+        rawNumber: '+1 (310) 349-6200',
+      },
       intl: {
         regionCode: '49',
         localNumber: '1712345678',
@@ -182,6 +190,7 @@ describe('Creation of phone links for href', () => {
     expect(formatPhoneNumberLink(testNumbers.usAreaCode)).toBe(
       'tel:+13103496200',
     );
+    expect(formatPhoneNumberLink(testNumbers.usIntl)).toBe('tel:+13103496200');
     expect(formatPhoneNumberLink(testNumbers.intl)).toBe('tel:+491712345678');
   });
 });
