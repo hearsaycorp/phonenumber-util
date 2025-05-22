@@ -163,7 +163,7 @@ export const getPhoneParts = (phoneNumber) => {
       ) {
         phoneParts.regionCode = '1';
         phoneParts.areaCode = strippedPhoneNumber.slice(2, 5);
-        phoneParts.localNumber = strippedPhoneNumber.slice(5, 12);
+        phoneParts.localNumber = strippedPhoneNumber.slice(5);
       }
       // Otherwise, an intl number which may have 1, 2 or 3 digit region
       else if (
