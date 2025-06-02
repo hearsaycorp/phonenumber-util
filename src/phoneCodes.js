@@ -555,6 +555,7 @@ export const AREA_CODES = {
   920: { name: 'Wisconsin', code: 'WI', region: UNITED_STATES },
   307: { name: 'Wyoming', code: 'WY', region: UNITED_STATES },
   // Candian Numbers
+  368: { name: 'Alberta', code: 'AB', region: CANADA },
   403: { name: 'Alberta', code: 'AB', region: CANADA },
   587: { name: 'Alberta', code: 'AB', region: CANADA },
   780: { name: 'Alberta', code: 'AB', region: CANADA },
