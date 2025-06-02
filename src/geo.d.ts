@@ -23,9 +23,18 @@ export function findTimeFromAreaCode(
   timezoneOffset: string | null;
   daylightSavings: boolean | null;
   stateHasMultipleTimezones: boolean | null;
-  state: string | null;
+  state: { name: string; code: string } | null;
+  region?: { name: string; code: string; flag: string };
   areaCodeHasMultipleTimezones: boolean | null;
   estimatedTime: boolean;
+  localTime24Hour?: string;
+  localTimeReadable?: string;
+  isTCPAQuietHours?: boolean;
+  isCRTCQuietHours?: boolean;
+  isQuietHours?: boolean;
 };
 
-export function findRegionFromRegionCode(regionCode: string): string | undefined;
+export function findRegionFromRegionCode(
+  regionCode: string | number,
+  areaCode?: string
+): { name: string; code: string; flag: string } | undefined;

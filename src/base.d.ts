@@ -26,12 +26,15 @@ export function sanitizeRawNumber(phoneNumber: string): string;
 export function findNumbersInString(text: string): Array<{
   index: number;
   lastIndex: number;
-  phoneParts: PhoneParts;
-}>;
+} & PhoneParts>;
 
-export function findPhoneFormat(regionCode: string): string;
+export function findPhoneFormat(params: {
+  regionCode: string;
+  e164: string;
+}): string;
 
 export function formatPhoneNumber(params: {
   format: string;
   e164: string;
+  regionCode: string;
 }): string | null;
