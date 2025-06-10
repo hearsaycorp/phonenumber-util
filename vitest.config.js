@@ -3,7 +3,9 @@ export default {
     globals: true,
     environment: 'node',
     coverage: {
-      reporter: ['json-summary'],
+      reporter: ['text', 'json-summary', 'html'],
+      include: ['src/**/*.js'],
+      exclude: ['src/**/*.test.js', 'src/__tests__/**'],
     },
   },
 };
