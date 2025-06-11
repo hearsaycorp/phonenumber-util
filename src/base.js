@@ -99,7 +99,7 @@ export const formatPhoneNumberLink = ({
  *
  * @param {string} phoneNumber - The phone number to validate.
  * @returns {Object} Returns an object with validation details.
- * @returns {string} returns.description - Description of the validation result. Possible values: 'NOT_A_NUMBER', 'VALID_NUMBER', 'UNKNOWN_LOCAL_NUMBER', 'UNKNOWN_AREA_CODE', 'UNKNOWN_FORMAT'.
+ * @returns {string} returns.description - Description of the validation result. Possible values: 'NOT_A_NUMBER', 'VALID_NUMBER', 'UNKNOWN_NUMBER', 'UNKNOWN_AREA_CODE', 'UNKNOWN_FORMAT'.
  * @returns {boolean} returns.isValid - True if the phone number is valid, otherwise false.
  */
 export const isValidPhoneNumberWithDescription = (phoneNumber) => {
@@ -117,8 +117,11 @@ export const isValidPhoneNumberWithDescription = (phoneNumber) => {
 
     // Check for phone validity by ability to extract useful parts.
     // This will also confirm area codes / region codes are valid.
+    //
+    // The localNumber value is just used here to validate correct parsing of the larger number.
+    // This can commonly be null if the regionCode is undefined.
     if (!phoneParts.localNumber) {
-      isValid.description = 'UNKNOWN_LOCAL_NUMBER';
+      isValid.description = 'UNKNOWN_NUMBER';
     } else if (phoneParts.regionCode === '1' && !phoneParts.areaCode) {
       isValid.description = 'UNKNOWN_AREA_CODE';
     } else {

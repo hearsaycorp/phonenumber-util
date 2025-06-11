@@ -274,24 +274,24 @@ describe('Phone number validation with description', () => {
       expect(result.isValid).toBe(false);
     });
 
-    it('should return UNKNOWN_LOCAL_NUMBER for currency strings that match regex', () => {
+    it('should return UNKNOWN_NUMBER for currency strings that match regex', () => {
       const result = isValidPhoneNumberWithDescription('$5055');
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
 
-    it('should return UNKNOWN_LOCAL_NUMBER for short number sequences that match regex', () => {
+    it('should return UNKNOWN_NUMBER for short number sequences that match regex', () => {
       const result = isValidPhoneNumberWithDescription('123');
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
   });
 
-  describe('UNKNOWN_LOCAL_NUMBER cases', () => {
-    it('should return UNKNOWN_LOCAL_NUMBER for numbers too short to extract local number', () => {
+  describe('UNKNOWN_NUMBER cases', () => {
+    it('should return UNKNOWN_NUMBER for numbers too short to extract local number', () => {
       // This creates a scenario where regex matches but getPhoneParts can't extract localNumber
       const result = isValidPhoneNumberWithDescription('123456');
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
   });
@@ -353,21 +353,21 @@ describe('Phone number validation with description', () => {
       expect(result.isValid).toBe(true);
     });
 
-    it('should reject numbers with too many characters as UNKNOWN_LOCAL_NUMBER', () => {
+    it('should reject numbers with too many characters as UNKNOWN_NUMBER', () => {
       const result = isValidPhoneNumberWithDescription('310-496-32313');
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
 
-    it('should reject repeated digits that form invalid area codes as UNKNOWN_LOCAL_NUMBER', () => {
+    it('should reject repeated digits that form invalid area codes as UNKNOWN_NUMBER', () => {
       const result = isValidPhoneNumberWithDescription('4444444444');
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
 
-    it('should reject 555 prefix numbers as UNKNOWN_LOCAL_NUMBER', () => {
+    it('should reject 555 prefix numbers as UNKNOWN_NUMBER', () => {
       const result = isValidPhoneNumberWithDescription('5553496200');
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
 
@@ -379,7 +379,7 @@ describe('Phone number validation with description', () => {
 
       // For now, let's test a case that we know behaves as expected
       const result = isValidPhoneNumberWithDescription('12345678'); // 8 digits, no pattern match
-      expect(result.description).toBe('UNKNOWN_LOCAL_NUMBER');
+      expect(result.description).toBe('UNKNOWN_NUMBER');
       expect(result.isValid).toBe(false);
     });
   });
