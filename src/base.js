@@ -10,6 +10,14 @@ const TILDES = '~\u2053\u223C\uFF5E';
 const VALID_DIGITS = '0-9';
 const PLUS_CHARS = '\\+';
 
+// Phone number length constants
+const MIN_PHONE_LENGTH = 7;
+const MAX_PHONE_LENGTH = 15;
+const US_PHONE_LENGTH = 10;
+const US_PHONE_WITH_COUNTRY_LENGTH = 11;
+const INTL_PHONE_WITH_PLUS_LENGTH = 12;
+const LOCAL_PHONE_LENGTH = 7;
+
 const VALID_PUNCTUATION = `${DASHES}${SLASHES}${DOTS}${WHITESPACE}${BRACKETS}${TILDES}`;
 
 const VALID_PHONE_NUMBER = new RegExp(
@@ -24,6 +32,7 @@ const VALID_PHONE_NUMBER = new RegExp(
  *
  * This function takes the components of a phone number and formats it into the
  * E.164 standard, which includes the region code and the local number. The format
+ * is +[country code][area code][local number] for US numbers or +[country code][local number] for international numbers.
  *
  * @param {Object} phoneParts - An object containing parts of the phone number.
  * @param {string} phoneParts.areaCode - The area code of the phone number.
@@ -89,26 +98,54 @@ export const formatPhoneNumberLink = ({
  * of the phone number and further confirms its validity based on the presence of these parts.
  *
  * @param {string} phoneNumber - The phone number to validate.
+ * @returns {Object} Returns an object with validation details.
+ * @returns {string} returns.description - Description of the validation result. Possible values: 'NOT_A_NUMBER', 'VALID_NUMBER', 'UNKNOWN_NUMBER', 'UNKNOWN_AREA_CODE', 'UNKNOWN_FORMAT'.
+ * @returns {boolean} returns.isValid - True if the phone number is valid, otherwise false.
+ */
+export const isValidPhoneNumberWithDescription = (phoneNumber) => {
+  let isValid = { description: '', isValid: false };
+
+  // Input validation
+  if (!phoneNumber || typeof phoneNumber !== 'string') {
+    isValid.description = 'NOT_A_NUMBER';
+    return isValid;
+  }
+
+  // Check the big chunky regex for phone validity (reuse existing regex)
+  if (VALID_PHONE_NUMBER.test(phoneNumber)) {
+    const phoneParts = getPhoneParts(phoneNumber);
+
+    // Check for phone validity by ability to extract useful parts.
+    // This will also confirm area codes / region codes are valid.
+    //
+    // The localNumber value is just used here to validate correct parsing of the larger number.
+    // This can commonly be null if the regionCode is undefined.
+    if (!phoneParts.localNumber) {
+      isValid.description = 'UNKNOWN_NUMBER';
+    } else if (phoneParts.regionCode === '1' && !phoneParts.areaCode) {
+      isValid.description = 'UNKNOWN_AREA_CODE';
+    } else {
+      isValid.description = 'VALID_NUMBER';
+      isValid.isValid = true;
+    }
+    return isValid;
+  }
+
+  isValid.description = 'UNKNOWN_FORMAT';
+
+  return isValid;
+};
+
+/**
+ * Validates a phone number based on a regex pattern and the ability to extract useful parts.
+ *
+ * This function uses the `isValidPhoneNumberWithDescription` function to check the phone number's validity and simply returns the boolean without any description.
+ *
+ * @param {string} phoneNumber - The phone number to validate.
  * @returns {boolean} Returns true if the phone number is valid, otherwise false.
  */
 export const isValidPhoneNumber = (phoneNumber) => {
-  // Check the big chunky regex for phone validity
-  const phonePattern = new RegExp(VALID_PHONE_NUMBER, 'ig');
-  if (phonePattern.test(phoneNumber)) {
-    const phoneParts = getPhoneParts(phoneNumber);
-
-    // Also check for phone validity by ability to extract useful parts.
-    // This will also confirm area codes / region codes are valid.
-    if (
-      phoneParts &&
-      phoneParts.localNumber &&
-      phoneParts.regionCode &&
-      (phoneParts.areaCode || phoneParts.regionCode !== '1')
-    ) {
-      return true;
-    }
-  }
-  return false;
+  return isValidPhoneNumberWithDescription(phoneNumber).isValid;
 };
 
 /**
@@ -122,9 +159,11 @@ export const isValidPhoneNumber = (phoneNumber) => {
  * @returns {Object} An object containing relevant phone number information.
  * @property {string|null} areaCode - The area code of the phone number.
  * @property {string|null} e164 - The E.164 formatted version of the phone number.
+ * @property {string|null} format - The format template for the phone number (e.g., "(xxx) xxx-xxxx").
+ * @property {string|null} formattedNumber - The formatted phone number according to the region's format.
  * @property {string|null} href - A formatted phone number link.
  * @property {string|null} localNumber - The local part of the phone number.
- * @property {string} rawNumber - The original raw phone number.  Unsanitized.
+ * @property {string} rawNumber - The original raw phone number. Unsanitized.
  * @property {string|null} regionCode - The region code of the phone number.
  */
 export const getPhoneParts = (phoneNumber) => {
@@ -150,15 +189,15 @@ export const getPhoneParts = (phoneNumber) => {
   // The shortest length for a phone number (that we care about) is 7 digits.
   // The longest phone number is 15 digits.
   if (
-    strippedPhoneNumber.replace(/\D/g, '').length >= 7 &&
-    strippedPhoneNumber.replace(/\D/g, '').length <= 15
+    strippedPhoneNumber.replace(/\D/g, '').length >= MIN_PHONE_LENGTH &&
+    strippedPhoneNumber.replace(/\D/g, '').length <= MAX_PHONE_LENGTH
   ) {
     // Extract the region code if not explicitly provided and it is part of the
     // phone number
     if (strippedPhoneNumber.startsWith('+')) {
       // US number formatted with +12065551234
       if (
-        strippedPhoneNumber.length === 12 &&
+        strippedPhoneNumber.length === INTL_PHONE_WITH_PLUS_LENGTH &&
         strippedPhoneNumber.startsWith('+1')
       ) {
         phoneParts.regionCode = '1';
@@ -185,7 +224,7 @@ export const getPhoneParts = (phoneNumber) => {
     }
     // If no region code is provided, assume US with the format 3109309000 after being stripped of non-numeric values.
     // We'll try and derive the area code by looking it up against the known area codes.
-    else if (strippedPhoneNumber.length === 10) {
+    else if (strippedPhoneNumber.length === US_PHONE_LENGTH) {
       if (AREA_CODE_LIST.indexOf(strippedPhoneNumber.substring(0, 3)) !== -1) {
         phoneParts.regionCode = '1';
         phoneParts.areaCode = strippedPhoneNumber.substring(0, 3);
@@ -194,14 +233,14 @@ export const getPhoneParts = (phoneNumber) => {
     }
     // If no region code is provided, assume US with the format 9309000 after being stripped of non-numeric values.
     // This is not able to be validated or formatted since it lacks an area code.
-    else if (strippedPhoneNumber.length === 7) {
+    else if (strippedPhoneNumber.length === LOCAL_PHONE_LENGTH) {
       phoneParts.regionCode = '1';
       phoneParts.localNumber = strippedPhoneNumber;
     }
 
     // Default to region code 1 for US numbers if none is provided
     if (
-      strippedPhoneNumber.length === 11 &&
+      strippedPhoneNumber.length === US_PHONE_WITH_COUNTRY_LENGTH &&
       strippedPhoneNumber.startsWith('1')
     ) {
       phoneParts.regionCode = '1';
@@ -212,7 +251,7 @@ export const getPhoneParts = (phoneNumber) => {
     // US likes a format that isn't as common
     if (phoneParts.localNumber && phoneParts.regionCode === '1') {
       // Specific format for US numbers with areaCode (206-930-9000).
-      if (phoneParts.localNumber.length === 10) {
+      if (phoneParts.localNumber.length === US_PHONE_LENGTH) {
         phoneParts.areaCode = phoneParts.localNumber.slice(0, 3);
       }
     } else if (phoneParts.localNumber) {
@@ -221,10 +260,11 @@ export const getPhoneParts = (phoneNumber) => {
     }
   }
 
-  // Unset any known invalid area codes.  We only care about region 1 (USA).
+  // Unset any known invalid area codes. We only care about region 1 (USA).
   if (
-    AREA_CODE_LIST.indexOf(phoneParts.areaCode) === -1 ||
-    phoneParts.regionCode !== '1'
+    phoneParts.regionCode === '1' &&
+    phoneParts.areaCode &&
+    AREA_CODE_LIST.indexOf(phoneParts.areaCode) === -1
   ) {
     phoneParts.areaCode = null;
   }
@@ -244,9 +284,12 @@ export const getPhoneParts = (phoneNumber) => {
  * except for the leading plus sign (+) if it exists.
  *
  * @param {string} phoneNumber - The raw phone number input.
- * @returns {string} - The sanitized phone number containing only digits and an optional leading plus sign.
+ * @returns {string} The sanitized phone number containing only digits and an optional leading plus sign.
  */
 export const sanitizeRawNumber = (phoneNumber) => {
+  if (!phoneNumber || typeof phoneNumber !== 'string') {
+    return '';
+  }
   return phoneNumber.replace(/(?!^\+)\D/g, '');
 };
 
@@ -263,11 +306,15 @@ export const sanitizeRawNumber = (phoneNumber) => {
  * @property {Object} phoneParts - The parts of the phone number, as returned by the getPhoneParts function.
  */
 export const findNumbersInString = (text) => {
+  if (!text || typeof text !== 'string') {
+    return [];
+  }
+
   const regex = new RegExp(VALID_PHONE_NUMBER, 'g');
   let matches = [];
   let match;
 
-  // Regex finds possible matches.  Go through each of them to further validate and extract relevant info.
+  // Regex finds possible matches. Go through each of them to further validate and extract relevant info.
   while ((match = regex.exec(text)) !== null) {
     let number = match[0].trim(); // Access the captured group
 
@@ -280,7 +327,7 @@ export const findNumbersInString = (text) => {
       const phoneParts = getPhoneParts(number);
 
       // Presumed phone numbers may be invalidated by omission of formattedNumber from getPhoneParts.
-      // This will prevent short-numbers that ommit area code from being fetched from a larger string since it may be unreliable.
+      // This will prevent short-numbers that omit area code from being fetched from a larger string since it may be unreliable.
       if (phoneParts.formattedNumber) {
         matches.push({
           index,
@@ -302,7 +349,7 @@ export const findNumbersInString = (text) => {
  * it defaults to the format for region code '1' (US).
  *
  * @param {Object} params - The parameters for formatting the phone number.
- * @param {string} regionCode - The region code to look up the phone number format.
+ * @param {string} params.regionCode - The region code to look up the phone number format.
  * @param {string} params.e164 - The E.164 formatted phone number to format. Example: `+12065551234`.
  * @returns {string} The phone number format for the given region code in the format of "(xxx) xxx-xxxx".
  */

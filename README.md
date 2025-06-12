@@ -70,8 +70,33 @@ isValidPhoneNumber(invalidPhoneNumber); // Returns `false` - "311" is not a vali
 const intlNumber = '+380 97 123 4567';
 isValidPhoneNumber(intlNumber); // Returns `true` - "380" is the region code for Ukraine
 
-const invalidIntlNumber = '+666 97 123 4567';
-isValidPhoneNumber(invalidIntlNumber); // Returns `false` - "666" is not a valid region code
+const invalidIntlNumber = '+000 97 123 4567';
+isValidPhoneNumber(invalidIntlNumber); // Returns `false` - "000" is not a valid region code
+```
+
+#### isValidPhoneNumberWithDescription
+
+Returns an object that will contain a boolean of `isValid` which will behave exactly the same as `isValidPhoneNumber` (`true` or `false` based on whether the passed number is presumed to be valid or invalid) in addition to a string `description` that will contain one of the following values:
+
+- `NOT_A_NUMBER` - The passed value is falsey (null, empty string, undefined or 0) or the passed value is not the expected `string` format.
+- `UNKNOWN_NUMBER` - The portion of the phone number including the region code and/or local number is unrecognized, unexpected or invalid.
+- `UNKNOWN_AREA_CODE` - The NANP number includes an area code of the correct length but cannot be validated. If you believe this to be in error, please file a [Github Issue](https://github.com/hearsaycorp/phonenumber-util/issues/new?title=Area+Code+Missing).
+- `VALID_NUMBER` - When `isValid` is `true`, this `description` will always read `VALID_NUMBER`.
+- `UNKNOWN_FORMAT` - There were issues parsing the provided number and does not appear to be a valid phone number structure.
+
+```javascript
+import { isValidPhoneNumberWithDescription } from '@yext/phonenumber-util';
+const validPhoneNumber = '3103496333';
+isValidPhoneNumberWithDescription(validPhoneNumber); // Returns { description: 'VALID_NUMBER', isValid: true }
+
+const invalidPhoneNumber = '3113496333';
+isValidPhoneNumberWithDescription(invalidPhoneNumber); // Returns { description: 'UNKNOWN_NUMBER', isValid: false }
+
+const intlNumber = '+380 97 123 4567';
+isValidPhoneNumberWithDescription(intlNumber); // Returns { description: 'VALID_NUMBER', isValid: true }
+
+const invalidIntlNumber = '+000 97 123 4567';
+isValidPhoneNumberWithDescription(invalidIntlNumber); // Returns { description: 'UNKNOWN_NUMBER', isValid: false }
 ```
 
 #### getPhoneParts
