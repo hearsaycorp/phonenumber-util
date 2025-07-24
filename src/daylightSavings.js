@@ -18,4 +18,6 @@ export const AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS = {
   672: 'British Columbia',
   778: 'British Columbia',
   306: 'Saskatchewan',
+  474: 'Saskatchewan',
+  639: 'Saskatchewan',
 };
