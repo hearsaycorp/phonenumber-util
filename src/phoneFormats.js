@@ -145,7 +145,6 @@ export const PHONE_FORMATS = {
   269: '+xxx xxx xx xx', // Comoros
   290: '+xxx xxxx', // Saint Helena
   291: '+xxx x xxx xxx', // Eritrea
-  295: '+xxx xxx xxxx', // San Marino
   297: '+xxx xxx xxxx', // Aruba
   298: '+xxx xxx xxx', // Faroe Islands
   299: '+xxx xx xx xx', // Greenland
