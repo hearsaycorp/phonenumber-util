@@ -242,16 +242,16 @@ describe('Validate that every allow-list area code has matching geo and time inf
     });
 
     Object.keys(PHONE_FORMATS).forEach((regionCode) => {
-      const phoneFormat = REGION_CODES[regionCode];
+      const regionInfo = REGION_CODES[regionCode];
 
-      if (!phoneFormat) {
+      if (!regionInfo) {
         console.warn(
           `Region code ${regionCode} does not have a matching REGION_CODES entry.`,
         );
       }
 
-      expect(phoneFormat).toBeDefined();
-      expect(phoneFormat).not.toBeNull();
+      expect(regionInfo).toBeDefined();
+      expect(regionInfo).not.toBeNull();
     });
   });
 });
