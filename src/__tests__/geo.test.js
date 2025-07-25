@@ -6,6 +6,10 @@ import {
   findTimeFromAreaCode,
   findRegionFromRegionCode,
 } from '../geo.js';
+import { AREA_CODE_LIST } from '../areaCodeList.js';
+import { AREA_CODES, REGION_CODES } from '../phoneCodes.js';
+import { PHONE_FORMATS } from '../phoneFormats.js';
+
 import { describe, it, expect } from 'vitest';
 
 const invalidPhone = {
@@ -183,6 +187,74 @@ const canadianPhone = {
     flag: '🇨🇦',
   },
 };
+
+describe('Validate that every allow-list area code has matching geo and time info', () => {
+  it('should ensure every area code in AREA_CODE_LIST has a matching region code in AREA_CODES', () => {
+    AREA_CODE_LIST.forEach((areaCode) => {
+      const areaCodeInfo = AREA_CODES[areaCode];
+
+      if (!areaCodeInfo) {
+        console.warn(
+          `Area code ${areaCode} does not have a matching AREA_CODES entry.`,
+        );
+      }
+
+      expect(areaCodeInfo).toBeDefined();
+      expect(areaCodeInfo).not.toBeNull();
+    });
+
+    Object.keys(AREA_CODES).forEach((areaCode) => {
+      const exists = AREA_CODE_LIST.includes(areaCode);
+
+      if (!exists) {
+        console.warn(
+          `Area code ${areaCode} does not have a matching AREA_CODE_LIST entry.`,
+        );
+      }
+
+      expect(exists).toBe(true);
+    });
+  });
+
+  it('should ensure every area code in AREA_CODE_LIST has a matching timezone', () => {
+    AREA_CODE_LIST.forEach((areaCode) => {
+      const timezone = findTimeFromAreaCode(
+        areaCode,
+        new Date('2024-07-15T08:00:00'),
+      );
+      expect(timezone).toBeDefined();
+      expect(timezone).not.toBeNull();
+    });
+  });
+
+  it('should ensure every region code in REGION_CODES has a matching phone format', () => {
+    Object.keys(REGION_CODES).forEach((regionCode) => {
+      const phoneFormat = PHONE_FORMATS[regionCode];
+
+      if (!phoneFormat) {
+        console.warn(
+          `Region code ${regionCode} does not have a matching PHONE_FORMATS entry.`,
+        );
+      }
+
+      expect(phoneFormat).toBeDefined();
+      expect(phoneFormat).not.toBeNull();
+    });
+
+    Object.keys(PHONE_FORMATS).forEach((regionCode) => {
+      const regionInfo = REGION_CODES[regionCode];
+
+      if (!regionInfo) {
+        console.warn(
+          `Region code ${regionCode} does not have a matching REGION_CODES entry.`,
+        );
+      }
+
+      expect(regionInfo).toBeDefined();
+      expect(regionInfo).not.toBeNull();
+    });
+  });
+});
 
 describe('Daylight Savings', () => {
   it('should correctly be determined if the time given is or is not within daylight savings time', () => {
