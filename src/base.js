@@ -322,8 +322,8 @@ export const findNumbersInString = (text) => {
     if (
       number.replace(new RegExp(`[${VALID_PUNCTUATION}]`, 'g'), '').length >= 6
     ) {
-      const index = text.indexOf(number);
-      const lastIndex = index + number.length;
+      const index = match.index;
+      const lastIndex = regex.lastIndex;
       const phoneParts = getPhoneParts(number);
 
       // Presumed phone numbers may be invalidated by omission of formattedNumber from getPhoneParts.
