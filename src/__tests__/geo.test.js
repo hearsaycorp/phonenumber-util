@@ -204,16 +204,15 @@ describe('Validate that every allow-list area code has matching geo and time inf
     });
 
     Object.keys(AREA_CODES).forEach((areaCode) => {
-      const areaCodeInfo = AREA_CODE_LIST[AREA_CODE_LIST.indexOf(areaCode)];
+      const exists = AREA_CODE_LIST.includes(areaCode);
 
-      if (!areaCodeInfo) {
+      if (!exists) {
         console.warn(
           `Area code ${areaCode} does not have a matching AREA_CODE_LIST entry.`,
         );
       }
 
-      expect(areaCodeInfo).toBeDefined();
-      expect(areaCodeInfo).not.toBeNull();
+      expect(exists).toBe(true);
     });
   });
 
