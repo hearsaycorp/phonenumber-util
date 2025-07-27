@@ -225,7 +225,7 @@ export const getPhoneParts = (phoneNumber) => {
     // If no region code is provided, assume US with the format 3109309000 after being stripped of non-numeric values.
     // We'll try and derive the area code by looking it up against the known area codes.
     else if (strippedPhoneNumber.length === US_PHONE_LENGTH) {
-      if (AREA_CODE_LIST.indexOf(strippedPhoneNumber.substring(0, 3)) !== -1) {
+      if (AREA_CODE_LIST.has(strippedPhoneNumber.substring(0, 3))) {
         phoneParts.regionCode = '1';
         phoneParts.areaCode = strippedPhoneNumber.substring(0, 3);
         phoneParts.localNumber = strippedPhoneNumber.substring(3);
@@ -264,7 +264,7 @@ export const getPhoneParts = (phoneNumber) => {
   if (
     phoneParts.regionCode === '1' &&
     phoneParts.areaCode &&
-    AREA_CODE_LIST.indexOf(phoneParts.areaCode) === -1
+    !AREA_CODE_LIST.has(phoneParts.areaCode)
   ) {
     phoneParts.areaCode = null;
   }
@@ -362,12 +362,13 @@ export const findPhoneFormat = ({ regionCode, e164 }) => {
   if (formatRaw && numberLength) {
     // The PHONE_FORMATS will have arrays for regions with inconsistent number lengths / formats.
     if (Array.isArray(formatRaw)) {
-      formatRaw.forEach((value) => {
+      for (const value of formatRaw) {
         const templateLength = value.split('x').length - 1;
         if (numberLength === templateLength) {
           format = value;
+          break;
         }
-      });
+      }
     }
     // Some region (such as the US) will have a consistent format, so we expect a string.
     else if (formatRaw) {

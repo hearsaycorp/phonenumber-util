@@ -204,7 +204,7 @@ describe('Validate that every allow-list area code has matching geo and time inf
     });
 
     Object.keys(AREA_CODES).forEach((areaCode) => {
-      const exists = AREA_CODE_LIST.includes(areaCode);
+      const exists = AREA_CODE_LIST.has(areaCode);
 
       if (!exists) {
         console.warn(
