@@ -2,7 +2,7 @@
 // If a new area code is added to this array, it must also be added to the AREA_CODES object in phoneCodes.js.
 // If a new area code is added and covers a region that has multiple timezones, it will need to be added to the STATES_WITH_MULTIPLE_TIMEZONES object in timezones.js.
 // If a new area code is added and covers a region that has portions that do and portions that do not adhere to daylight savings time, it will need to be added to the AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS object in daylightSavings.js.
-export const AREA_CODE_LIST = [
+export const AREA_CODE_LIST = new Set([
   '201',
   '202',
   '203',
@@ -504,4 +504,4 @@ export const AREA_CODE_LIST = [
   '985',
   '986',
   '989',
-];
+]);
