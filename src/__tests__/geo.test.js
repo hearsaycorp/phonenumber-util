@@ -206,7 +206,7 @@ The map, Sophie realized, was the heart of the mystery. Each phone number had be
 "A friend of your grandfather," the voice replied. "He knew you would finish what he started."
 The call ended abruptly, leaving Sophie with more questions than answers. But as she stared at the journal, now marked with notes and connections, she felt a sense of purpose. Each phone number was a clue, each person a piece of a puzzle her grandfather had trusted her to solve.
 And Sophie was determined to finish what Robert Fields had begun.`;
-const longStreamOutput = [
+const longStringOutput = [
   {
     index: 464,
     lastIndex: 476,
@@ -592,6 +592,6 @@ describe('Extracts all useful phone info from a long string of text', () => {
       }
     });
 
-    expect(goodNumbers).toEqual(longStreamOutput);
+    expect(goodNumbers).toEqual(longStringOutput);
   });
 });
