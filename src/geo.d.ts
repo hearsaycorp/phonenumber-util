@@ -38,3 +38,8 @@ export function findRegionFromRegionCode(
   regionCode: string | number,
   areaCode?: string
 ): { name: string; code: string; flag: string } | undefined;
+
+export function findAllNumbersInfoInString(
+  text: string,
+  date?: Date
+): Array<object>;
