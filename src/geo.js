@@ -12,6 +12,7 @@ import {
   STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS,
   AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS,
 } from './daylightSavings.js';
+import { findNumbersInString } from './base.js';
 
 /**
  * Determines whether the given date is within daylight saving time for the local time zone.
@@ -255,4 +256,23 @@ export function findRegionFromRegionCode(regionCode, areaCode) {
   }
 
   return regionInfo;
+}
+
+/**
+ * Finds all phone numbers in a string and adds in geographical and/or time zone information to that object.
+ *
+ * @param {string} text - The text to search for phone numbers.
+ * @param {Date} [date=new Date()] - The date to use for determining time zone information. Defaults to the current date.
+ * @returns {Array<object>} An array of objects, where each object represents a found phone number
+ * and includes details from `findNumbersInString` as well as geographical and/or time zone information.
+ */
+export function findAllNumbersInfoInString(text, date = new Date()) {
+  const numbers = findNumbersInString(text);
+
+  return numbers.map((item) => {
+    const geo = item.areaCode
+      ? findTimeFromAreaCode(item.areaCode, date)
+      : findRegionFromRegionCode(item.regionCode);
+    return { ...item, ...geo };
+  });
 }

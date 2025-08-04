@@ -1,4 +1,3 @@
-import { findNumbersInString } from '../base.js';
 import {
   isDaylightSavingTime,
   formatTimeOffset,
@@ -6,6 +5,7 @@ import {
   findTimeDetails,
   findTimeFromAreaCode,
   findRegionFromRegionCode,
+  findAllNumbersInfoInString,
 } from '../geo.js';
 import { AREA_CODE_LIST } from '../areaCodeList.js';
 import { AREA_CODES, REGION_CODES } from '../phoneCodes.js';
@@ -578,20 +578,11 @@ describe('Provides region name for a given region code', () => {
 
 describe('Extracts all useful phone info from a long string of text', () => {
   it('Returns all phone numbers and geo data', () => {
-    const numbers = findNumbersInString(longStringWithNumbers);
-    const goodNumbers = numbers.map((item) => {
-      if (item.areaCode) {
-        const geo = findTimeFromAreaCode(
-          item.areaCode,
-          new Date('2024-07-20T08:00:00'),
-        );
-        return { ...item, ...geo };
-      } else {
-        const geo = findRegionFromRegionCode(item.regionCode);
-        return { ...item, ...geo };
-      }
-    });
+    const numbers = findAllNumbersInfoInString(
+      longStringWithNumbers,
+      new Date('2024-07-20T08:00:00'),
+    );
 
-    expect(goodNumbers).toEqual(longStringOutput);
+    expect(numbers).toEqual(longStringOutput);
   });
 });
