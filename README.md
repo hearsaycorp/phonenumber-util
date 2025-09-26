@@ -39,43 +39,43 @@ npm test
 npx vitest run --coverage
 ```
 
-### ⚠️ **CRITICAL SECURITY WARNING**
+### ⚠️ **SECURITY WARNING**
 
 **The `rawNumber` field contains UNSANITIZED user input and poses XSS risks if displayed in web applications.**
 
 #### 🚨 **NEVER do this:**
 
 ```javascript
-// ❌ DANGEROUS - Direct HTML insertion
+// DANGEROUS - Direct HTML insertion
 document.getElementById('phone').innerHTML = result.rawNumber;
 
-// ❌ DANGEROUS - Template literal insertion
+// DANGEROUS - Template literal insertion
 element.innerHTML = `Call ${result.rawNumber}`;
 
-// ❌ DANGEROUS - React without escaping
+// DANGEROUS - React without escaping
 return <div>{result.rawNumber}</div>;
 ```
 
 #### ✅ **Safe approaches:**
 
 ```javascript
-// ✅ SAFE - Use formatted version for display
+// SAFE - Use formatted version for display
 document.getElementById('phone').textContent = result.formattedNumber;
 
-// ✅ SAFE - Use rawNumber for string replacement/processing
+// SAFE - Use rawNumber for string replacement/processing
 const updatedText = originalText.replace(
   result.rawNumber,
   result.formattedNumber,
 );
 
-// ✅ SAFE - Escape before HTML insertion
+// SAFE - Escape before HTML insertion
 document.getElementById('phone').innerHTML = escapeHtml(result.rawNumber);
 
-// ✅ SAFE - React with proper text content
+// SAFE - React with proper text content
 return <div>{result.formattedNumber}</div>;
 ```
 
-#### 🎯 **Why `rawNumber` exists:**
+#### **Why `rawNumber` exists:**
 
 The `rawNumber` field enables powerful text replacement functionality:
 
