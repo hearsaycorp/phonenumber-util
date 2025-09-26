@@ -15,34 +15,35 @@ export const PHONE_FORMATS = {
   40: '+xx xxx xxx xxx', // Romania
   41: '+xx xxx xxx xx xx', // Switzerland
   43: [
-    '+xx xxxx xxx-xxx', // 10 digits (mobile)
-    '+xx xxxx xxx-xxxx', // 11 digits
+    '+xx xxxx xxxx', // 10 digits (landline)
+    '+xx xxxx xxxx xx', // 12 digits (mobile)
   ], // Austria
   44: [
-    '+xx xxxx xxxxxx', // 10 digits (landline)
-    '+xx xxxxx xxxxxx', // 11 digits (mobile)
+    '+xx xxxx xxxxxx', // 12 digits (landline/mobile)
+    '+xx xxxxx xxxxxx', // 13 digits (some mobiles)
   ], // United Kingdom
   45: '+xx xx xx xx xx', // Denmark
   46: '+xx xx-xxx xx xx', // Sweden
   47: '+xx xxx xx xxx', // Norway
   48: '+xx xxx xxx xxx', // Poland
   49: [
-    '+xx xxx xxxxxxx', // 10 digits (standard)
-    '+xx xxxx xxxxxxxx', // 11 digits (mobile)
+    '+xx xx xxxxxxx', // 11 digits (landline: +49 + 2-digit area code + 7 digits)
+    '+xx xxx xxxxxxx', // 12 digits (landline: +49 + 3-digit area code + 7 digits)
+    '+xx xxx xxxxxxxx', // 12 digits (mobile: +49 + 3-digit prefix + 8 digits)
   ], // Germany
   51: '+xx xxx xxx xxx', // Peru
   52: [
-    '+xx xxx xxx xxxx', // 10 digits (standard)
-    '+xx xx xx xxxx xxxx', // 12 digits (with area code)
+    '+xx xxx xxx xxxx', // 12 digits (landline)
+    '+xx xxx xxx xxxx', // 13 digits (mobile with 1)
   ], // Mexico
   53: '+xx x xxx xxxx', // Cuba
   54: [
-    '+xx xxx-xxx-xxxx', // 10 digits (mobile and Buenos Aires)
-    '+xx xxxx-xx-xxxx', // 11 digits (mobile with 9 prefix)
+    '+xx xxx-xxx-xxxx', // 12 digits (landline)
+    '+xx xxxx-xxx-xxxx', // 13 digits (mobile with 9 prefix)
   ], // Argentina
   55: [
-    '+xx xx xxxx-xxxx', // 10 digits (standard)
-    '+xx xx xxxxx-xxxx', // 11 digits (mobile)
+    '+xx xx xxxx-xxxx', // 12 digits (landline)
+    '+xx xx xxxxx-xxxx', // 13 digits (mobile)
   ], // Brazil
   56: '+xx x xxxx xxxx', // Chile
   57: '+xx xxx xxx xxxx', // Colombia
