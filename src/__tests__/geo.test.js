@@ -586,3 +586,26 @@ describe('Extracts all useful phone info from a long string of text', () => {
     expect(numbers).toEqual(longStringOutput);
   });
 });
+
+describe('Area code region information mapping', () => {
+  it('should include region details when area code has region information', () => {
+    const result = findTimeFromAreaCode('206', new Date('2024-07-15T08:00:00'));
+
+    expect(result.region).toBeDefined();
+    expect(result.region.name).toBe('United States');
+    expect(result.region.code).toBe('US');
+    expect(result.state).toBeDefined();
+    expect(result.state.name).toBe('Washington');
+    expect(result.state.code).toBe('WA');
+  });
+
+  it('should include region flag for area codes with region property', () => {
+    // Test with Puerto Rico which has a region property with flag
+    const result = findTimeFromAreaCode('787', new Date('2024-07-15T08:00:00'));
+
+    expect(result.region).toBeDefined();
+    expect(result.region.flag).toBeDefined();
+    expect(result.region.name).toBe('Puerto Rico');
+    expect(result.region.code).toBe('PR');
+  });
+});

@@ -371,7 +371,7 @@ export const findPhoneFormat = ({ regionCode, e164 }) => {
       }
     }
     // Some region (such as the US) will have a consistent format, so we expect a string.
-    else if (formatRaw) {
+    else {
       format = formatRaw;
     }
   }

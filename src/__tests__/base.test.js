@@ -433,6 +433,11 @@ describe('Phone number pretty formatting', () => {
         regionCode: '47',
         format: findPhoneFormat({ regionCode: '47', e164: '+471740876543' }),
       },
+      egyptStringFormat: {
+        e164: '+201012345678',
+        regionCode: '20',
+        format: findPhoneFormat({ regionCode: '20', e164: '+201012345678' }),
+      },
     };
 
     expect(formatPhoneNumber(testNumbers.nullCase)).toBe(null);
@@ -443,5 +448,68 @@ describe('Phone number pretty formatting', () => {
     expect(formatPhoneNumber(testNumbers.norwayUnexpected)).toBe(
       '+47174087654',
     );
+    // Egypt has a string format (not array), this tests the else if (formatRaw)
+    expect(formatPhoneNumber(testNumbers.egyptStringFormat)).toBe(
+      '+20 101 234 5678',
+    );
+  });
+});
+
+describe('E.164 formatting edge cases', () => {
+  describe('formatPhoneNumberForE164 with missing required fields', () => {
+    it('should format US numbers with separate area code correctly', () => {
+      expect(
+        formatPhoneNumberForE164({
+          regionCode: '1',
+          areaCode: '310',
+          localNumber: '3496200',
+        }),
+      ).toBe('+13103496200');
+    });
+
+    it('should format international numbers without area code correctly', () => {
+      expect(
+        formatPhoneNumberForE164({
+          regionCode: '44',
+          areaCode: null,
+          localNumber: '2079460958',
+        }),
+      ).toBe('+442079460958');
+    });
+  });
+
+  describe('International number parsing with unknown region codes', () => {
+    it('should handle international numbers that do not match any known region code in the loop', () => {
+      // Test a number with + prefix and valid length but an unrecognized region code
+      // The parser should try all region code lengths (1, 2, 3 digits) but find no match in PHONE_FORMATS
+      const phoneParts = getPhoneParts('+00012345678');
+      // Should not have regionCode since +000, +00, or +0 are not valid region codes
+      expect(phoneParts.regionCode).toBeNull();
+      expect(phoneParts.localNumber).toBeNull();
+    });
+
+    it('should handle numbers that skip the international parsing else-if block entirely', () => {
+      // Test numbers with + prefix that exceed the maximum length for international number parsing
+      // The parser checks strippedPhoneNumber.length <= 14, so 16 chars (15 digits + plus sign) is too long
+      // This ensures the else-if branch is not entered, leaving regionCode and localNumber as null
+      const longNumber = getPhoneParts('+123456789012345'); // 15 digits, 16 chars total
+      expect(longNumber.regionCode).toBeNull();
+      expect(longNumber.localNumber).toBeNull();
+    });
+  });
+
+  describe('findNumbersInString with multiple phone numbers', () => {
+    it('should extract multiple valid phone numbers from a single string', () => {
+      const text = 'Call me at +1 (310) 349-6200 or +44 20 7946 0958.';
+      const results = findNumbersInString(text);
+      expect(results.length).toBe(2);
+      expect(results[0].e164).toBe('+13103496200');
+      expect(results[1].e164).toBe('+442079460958');
+    });
+
+    it('should return an empty array when no valid phone numbers are present', () => {
+      const text = 'No phone numbers here!';
+      expect(findNumbersInString(text)).toEqual([]);
+    });
   });
 });
