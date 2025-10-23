@@ -155,13 +155,11 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
       code: AREA_CODES[areaCode].code,
     };
 
-    if (AREA_CODES[areaCode].region) {
-      returnTime.region = {
-        name: AREA_CODES[areaCode].region.name,
-        code: AREA_CODES[areaCode].region.code,
-        flag: AREA_CODES[areaCode].region.flag,
-      };
-    }
+    returnTime.region = {
+      name: AREA_CODES[areaCode].region.name,
+      code: AREA_CODES[areaCode].region.code,
+      flag: AREA_CODES[areaCode].region.flag,
+    };
   }
 
   if (!stateName || !STATE_TIMEZONES[stateName]) {
