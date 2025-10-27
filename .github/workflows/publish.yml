@@ -4,6 +4,9 @@ permissions:
   contents: read
   id-token: write
 
+on:
+  workflow_dispatch:
+
 jobs:
   publish:
     environment: Release
