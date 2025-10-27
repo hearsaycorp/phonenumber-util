@@ -4,6 +4,9 @@
   "author": "bajohnson@hearsaycorp.com",
   "license": "BSD-3-Clause",
   "description": "Utility for extracting and validating phone numbers",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "src",
   "exports": {
@@ -22,7 +25,11 @@
     "test": "TZ=America/Los_Angeles vitest",
     "build": "node -e \"console.log('No build script for vanilla JS')\"",
     "prepare": "husky",
-    "make-badges": "istanbul-badges-readme"
+    "make-badges": "istanbul-badges-readme",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "release": "npm run test && npm run lint && git push && git push --tags"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
