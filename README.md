@@ -39,6 +39,33 @@ npm test
 npx vitest run --coverage
 ```
 
+#### Release Process
+
+This package is automatically published to NPM via GitHub Actions when a new version tag is pushed.
+
+To publish a new version:
+
+1. **Bump the version** using one of these commands:
+
+   ```bash
+   npm run version:patch  # For bug fixes (0.4.0 → 0.4.1)
+   npm run version:minor  # For new features (0.4.0 → 0.5.0)
+   npm run version:major  # For breaking changes (0.4.0 → 1.0.0)
+   ```
+
+2. **Push the changes and tags**:
+
+   ```bash
+   npm run release
+   ```
+
+   This will run tests, linting, and push both commits and tags to GitHub.
+
+3. **GitHub Actions will automatically**:
+   - Run tests and linting
+   - Publish to NPM with provenance
+   - Use OIDC authentication for secure publishing
+
 ### ⚠️ **SECURITY WARNING**
 
 **The `rawNumber` field contains UNSANITIZED user input and poses XSS risks if displayed in web applications.**
