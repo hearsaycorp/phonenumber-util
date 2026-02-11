@@ -1,6 +1,6 @@
 {
   "name": "@yext/phonenumber-util",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "bajohnson@hearsaycorp.com",
   "license": "BSD-3-Clause",
   "description": "Utility for extracting and validating phone numbers",
