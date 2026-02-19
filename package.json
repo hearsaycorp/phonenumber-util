@@ -32,16 +32,16 @@
     "release": "npm run test && npm run lint && git push && git push --tags"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
-    "@vitest/coverage-v8": "^4.0.2",
-    "eslint": "^9.38.0",
-    "generate-license-file": "^4.1.0",
-    "globals": "^16.4.0",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^10.0.0",
+    "generate-license-file": "^4.1.1",
+    "globals": "^17.3.0",
     "husky": "^9.1.7",
     "istanbul-badges-readme": "^1.9.0",
-    "lint-staged": "^16.2.6",
-    "prettier": "^3.6.2",
-    "vitest": "^4.0.2"
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "vitest": "^4.0.18"
   },
   "eslintConfig": {},
   "lint-staged": {
