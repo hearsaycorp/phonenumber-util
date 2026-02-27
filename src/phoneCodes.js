@@ -578,7 +578,7 @@ export const AREA_CODES = {
   },
   902: {
     name: 'Nova Scotia and Prince Edward Island',
-    state: 'NS/PE',
+    code: 'NS/PE',
     region: CANADA,
   },
   226: { name: 'Ontario', code: 'ON', region: CANADA },
