@@ -39,6 +39,85 @@ npm test
 npx vitest run --coverage
 ```
 
+#### Release Process
+
+This package is automatically published to NPM via GitHub Actions when a new version tag is pushed.
+
+To publish a new version:
+
+1. **Bump the version** using one of these commands:
+
+   ```bash
+   npm run version:patch  # For bug fixes (0.4.0 → 0.4.1)
+   npm run version:minor  # For new features (0.4.0 → 0.5.0)
+   npm run version:major  # For breaking changes (0.4.0 → 1.0.0)
+   ```
+
+2. **Push the changes and tags**:
+
+   ```bash
+   npm run release
+   ```
+
+   This will run tests, linting, and push both commits and tags to GitHub.
+
+3. **GitHub Actions will automatically**:
+   - Run tests and linting
+   - Publish to NPM with provenance
+   - Use OIDC authentication for secure publishing
+
+### ⚠️ **SECURITY WARNING**
+
+**The `rawNumber` field contains UNSANITIZED user input and poses XSS risks if displayed in web applications.**
+
+#### 🚨 **NEVER do this:**
+
+```javascript
+// DANGEROUS - Direct HTML insertion
+document.getElementById('phone').innerHTML = result.rawNumber;
+
+// DANGEROUS - Template literal insertion
+element.innerHTML = `Call ${result.rawNumber}`;
+
+// DANGEROUS - React without escaping
+return <div>{result.rawNumber}</div>;
+```
+
+#### ✅ **Safe approaches:**
+
+```javascript
+// SAFE - Use formatted version for display
+document.getElementById('phone').textContent = result.formattedNumber;
+
+// SAFE - Use rawNumber for string replacement/processing
+const updatedText = originalText.replace(
+  result.rawNumber,
+  result.formattedNumber,
+);
+
+// SAFE - Escape before HTML insertion
+document.getElementById('phone').innerHTML = escapeHtml(result.rawNumber);
+
+// SAFE - React with proper text content
+return <div>{result.formattedNumber}</div>;
+```
+
+#### **Why `rawNumber` exists:**
+
+The `rawNumber` field enables powerful text replacement functionality:
+
+```javascript
+const text = 'Call me at (310) 555-1234 anytime!';
+const numbers = findNumbersInString(text);
+let updatedText = text;
+
+numbers.forEach((phone) => {
+  // Replace original with formatted version
+  updatedText = updatedText.replace(phone.rawNumber, phone.formattedNumber);
+});
+// Result: "Call me at (310) 555-1234 anytime!" → formatted consistently
+```
+
 ### Warning
 
 The returned object will include a `rawNumber` value. This value is the return of the exact value passed to the function. No sanitization occurs with this value. If you reference this number, ensure you sanitize it _BEFORE_ passing to this function.
