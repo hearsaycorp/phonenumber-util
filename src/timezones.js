@@ -55,7 +55,7 @@ export const STATE_TIMEZONES = {
   'Virgin Islands': '-04:00',
   Virginia: '-05:00',
   Washington: '-08:00',
-  'Washington, DC': '-04:00',
+  'Washington, DC': '-05:00',
   'West Virginia': '-05:00',
   Wisconsin: '-06:00',
   Wyoming: '-07:00',
