@@ -125,11 +125,16 @@ export function offsetTieBreaker(timezones, date) {
  * @returns {TimeDetails} An object containing local time details and quiet-hours flags.
  */
 export function findTimeDetails(offset, date, stateName) {
+  const sign = offset.startsWith('-') ? -1 : 1;
+  const [offsetHours, offsetMinutes] = offset
+    .replace(/^[+-]/, '')
+    .split(':')
+    .map((value) => parseInt(value, 10));
   const localTime = new Date(
     date.getTime() +
       date.getTimezoneOffset() * 60000 +
-      parseInt(offset.split(':')[0]) * 3600000 +
-      parseInt(offset.split(':')[1]) * 60000,
+      sign * offsetHours * 3600000 +
+      sign * offsetMinutes * 60000,
   );
   const localDay = localTime.getDay();
   const localMinutes = localTime.getHours() * 60 + localTime.getMinutes();

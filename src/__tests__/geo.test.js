@@ -525,6 +525,20 @@ describe('Provides compliance quiet hours for any given region', () => {
       findTimeDetails('-05:00', new Date('2026-01-06T02:31:00.000Z'), 'Ontario')
         .isCRTCQuietHours,
     ).toEqual(true);
+    expect(
+      findTimeDetails(
+        '-03:30',
+        new Date('2026-01-06T12:29:00.000Z'),
+        'Newfoundland and Labrador',
+      ).isCRTCQuietHours,
+    ).toEqual(true);
+    expect(
+      findTimeDetails(
+        '-03:30',
+        new Date('2026-01-06T12:30:00.000Z'),
+        'Newfoundland and Labrador',
+      ).isCRTCQuietHours,
+    ).toEqual(false);
 
     // Both should have an abstracted general quiet hours value.
     expect(
