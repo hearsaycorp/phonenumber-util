@@ -14,6 +14,8 @@ import {
 } from './daylightSavings.js';
 import { findNumbersInString } from './base.js';
 
+const SASKATCHEWAN_TIME_OPTION_AREA_CODES = new Set(['306', '474', '639']);
+
 /**
  * @typedef {Object} RegionInfo
  * @property {string} name
@@ -105,7 +107,7 @@ export function formatTimeOffset(offset) {
  */
 export function offsetTieBreaker(timezones, date) {
   const localTime = date.toLocaleTimeString('en-US', { hour12: false });
-  const localHour = parseInt(localTime.split(':')[0]);
+  const localHour = parseInt(localTime.split(':')[0], 10);
 
   if (localHour < 12) {
     return timezones[0];
@@ -130,7 +132,7 @@ export function findTimeDetails(offset, date, stateName) {
       parseInt(offset.split(':')[1]) * 60000,
   );
   const localDay = localTime.getDay();
-  const localHour = localTime.getHours();
+  const localMinutes = localTime.getHours() * 60 + localTime.getMinutes();
   // CRTC Info
   const isWeekend = localDay === 0 || localDay === 6;
   const isCRTCRegion = CRTC_STATES.indexOf(stateName) !== -1;
@@ -143,18 +145,19 @@ export function findTimeDetails(offset, date, stateName) {
   if (isCRTCRegion) {
     if (isWeekend) {
       timeDetails.isCRTCQuietHours = !(
-        localHour >= CRTC_QUIET_HOURS.weekends.start &&
-        localHour < CRTC_QUIET_HOURS.weekends.end
+        localMinutes >= CRTC_QUIET_HOURS.weekends.start * 60 &&
+        localMinutes < CRTC_QUIET_HOURS.weekends.end * 60
       );
     } else {
       timeDetails.isCRTCQuietHours = !(
-        localHour >= CRTC_QUIET_HOURS.weekdays.start &&
-        localHour < CRTC_QUIET_HOURS.weekdays.end
+        localMinutes >= CRTC_QUIET_HOURS.weekdays.start * 60 &&
+        localMinutes < CRTC_QUIET_HOURS.weekdays.end * 60
       );
     }
   } else {
     timeDetails.isTCPAQuietHours = !(
-      localHour >= TCPA_QUIET_HOURS.start && localHour < TCPA_QUIET_HOURS.end
+      localMinutes >= TCPA_QUIET_HOURS.start * 60 &&
+      localMinutes < TCPA_QUIET_HOURS.end * 60
     );
   }
 
@@ -178,6 +181,8 @@ export function findTimeDetails(offset, date, stateName) {
 export function findTimeFromAreaCode(areaCode, date = new Date()) {
   let localOffset;
   const stateName = AREA_CODES[areaCode]?.name;
+  const inDaylightSavingTime = isDaylightSavingTime(date);
+  let handledSeasonalOffset = false;
   let returnTime = {
     timezoneOffset: null,
     stateHasMultipleTimezones: null,
@@ -199,11 +204,52 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
     };
   }
 
+  // Area code 867 spans Yukon, the Northwest Territories, and Nunavut, which
+  // do not share a single timezone or daylight-saving policy.
+  if (areaCode === '867') {
+    returnTime.estimatedTime = true;
+    return returnTime;
+  }
+
   if (!stateName || !STATE_TIMEZONES[stateName]) {
     return returnTime;
   }
 
+  // Most of British Columbia is now UTC-7 year-round, but these overlays also
+  // cover southeastern communities that align with Alberta in summer.
   if (
+    stateName === 'British Columbia' &&
+    AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS[areaCode]
+  ) {
+    returnTime.stateHasMultipleTimezones = true;
+    returnTime.areaCodeHasMultipleTimezones = inDaylightSavingTime;
+    returnTime.daylightSavings = inDaylightSavingTime;
+    returnTime.estimatedTime = inDaylightSavingTime;
+    handledSeasonalOffset = true;
+    localOffset = inDaylightSavingTime
+      ? offsetTieBreaker(['-06:00', '-07:00'], date)
+      : '-07:00';
+  }
+
+  // Saskatchewan is mostly UTC-6 year-round, but some communities align with
+  // Alberta in winter while others observe summer daylight saving time.
+  if (
+    !localOffset &&
+    stateName === 'Saskatchewan' &&
+    SASKATCHEWAN_TIME_OPTION_AREA_CODES.has(areaCode)
+  ) {
+    returnTime.stateHasMultipleTimezones = true;
+    returnTime.areaCodeHasMultipleTimezones = !inDaylightSavingTime;
+    returnTime.daylightSavings = false;
+    returnTime.estimatedTime = !inDaylightSavingTime;
+    handledSeasonalOffset = true;
+    localOffset = inDaylightSavingTime
+      ? '-06:00'
+      : offsetTieBreaker(['-06:00', '-07:00'], date);
+  }
+
+  if (
+    !localOffset &&
     STATES_WITH_MULTIPLE_TIMEZONES[stateName] &&
     STATES_WITH_MULTIPLE_TIMEZONES[stateName][areaCode]
   ) {
@@ -221,17 +267,22 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
       localOffset = STATES_WITH_MULTIPLE_TIMEZONES[stateName][areaCode];
       returnTime.areaCodeHasMultipleTimezones = false;
     }
-  } else {
+  } else if (!localOffset) {
     returnTime.stateHasMultipleTimezones =
       !!STATES_WITH_MULTIPLE_TIMEZONES[stateName];
     returnTime.areaCodeHasMultipleTimezones = false;
     localOffset = STATE_TIMEZONES[stateName];
   }
 
-  if (AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS[areaCode]) {
+  if (
+    !handledSeasonalOffset &&
+    AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS[areaCode] &&
+    stateName !== 'British Columbia' &&
+    stateName !== 'Saskatchewan'
+  ) {
     const offset = parseInt(localOffset.split(':')[0]);
 
-    if (isDaylightSavingTime(date)) {
+    if (inDaylightSavingTime) {
       returnTime.daylightSavings = true;
       // During daylight savings, parts of this area code will be adhering and other parts not.
       // We'll take the most _conservative_ time within the two options.
@@ -242,17 +293,20 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
       returnTime.daylightSavings = false;
       localOffset = `${offset}:00`;
     }
-  } else if (!STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS.includes(stateName)) {
+  } else if (
+    !handledSeasonalOffset &&
+    !STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS.includes(stateName)
+  ) {
     const offset = parseInt(localOffset.split(':')[0]);
 
-    if (isDaylightSavingTime(date)) {
+    if (inDaylightSavingTime) {
       returnTime.daylightSavings = true;
       localOffset = `${offset + 1}:00`;
     } else {
       returnTime.daylightSavings = false;
       localOffset = `${offset}:00`;
     }
-  } else {
+  } else if (!handledSeasonalOffset) {
     returnTime.daylightSavings = false;
   }
 

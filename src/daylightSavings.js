@@ -7,11 +7,10 @@
 export const STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS = [
   'Arizona',
   'Hawaii',
-  'British Columbia',
   'Puerto Rico',
   'Saskatchewan',
   'Virgin Islands',
-  'Yukon, Northwest Territories, and Nunavut',
+  'Yukon',
 ];
 
 /**
@@ -29,7 +28,4 @@ export const AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS = {
   257: 'British Columbia',
   672: 'British Columbia',
   778: 'British Columbia',
-  306: 'Saskatchewan',
-  474: 'Saskatchewan',
-  639: 'Saskatchewan',
 };

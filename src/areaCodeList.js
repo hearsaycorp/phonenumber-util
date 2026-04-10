@@ -444,6 +444,7 @@ export const AREA_CODE_LIST = new Set([
   '876',
   '877',
   '878',
+  '879',
   '880',
   '881',
   '882',

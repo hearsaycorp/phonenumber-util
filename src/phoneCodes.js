@@ -577,6 +577,7 @@ export const AREA_CODES = {
   584: { name: 'Manitoba', code: 'MB', region: CANADA },
   506: { name: 'New Brunswick', code: 'NB', region: CANADA },
   709: { name: 'Newfoundland and Labrador', code: 'NL', region: CANADA },
+  879: { name: 'Newfoundland and Labrador', code: 'NL', region: CANADA },
   782: {
     name: 'Nova Scotia and Prince Edward Island',
     code: 'NS/PE',

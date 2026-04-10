@@ -61,6 +61,15 @@ describe('Region code mapping', () => {
     expect(getPhoneParts('+1 420 222 3333').formattedNumber).toBeNull();
   });
 
+  it('handles new Canadian overlays that were added after the original dataset', () => {
+    const phoneParts = getPhoneParts('+1 879 555 1234');
+
+    expect(phoneParts.areaCode).toBe('879');
+    expect(phoneParts.regionCode).toBe('1');
+    expect(phoneParts.e164).toBe('+18795551234');
+    expect(phoneParts.formattedNumber).toBe('(879) 555-1234');
+  });
+
   it('handles a number is definitely not a phone number', () => {
     expect(getPhoneParts('7/23/2025').formattedNumber).toBeNull();
   });
