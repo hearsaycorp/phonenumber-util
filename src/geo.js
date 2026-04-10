@@ -15,6 +15,48 @@ import {
 import { findNumbersInString } from './base.js';
 
 /**
+ * @typedef {Object} RegionInfo
+ * @property {string} name
+ * @property {string} code
+ * @property {string} flag
+ */
+
+/**
+ * @typedef {Object} StateInfo
+ * @property {string} name
+ * @property {string} code
+ */
+
+/**
+ * @typedef {Object} TimeDetails
+ * @property {string} localTimeReadable
+ * @property {string} localTime24Hour
+ * @property {boolean} [isTCPAQuietHours]
+ * @property {boolean} [isCRTCQuietHours]
+ * @property {boolean} isQuietHours
+ */
+
+/**
+ * @typedef {Object} AreaCodeTimeInfo
+ * @property {string | null} timezoneOffset
+ * @property {boolean | null} daylightSavings
+ * @property {boolean | null} stateHasMultipleTimezones
+ * @property {boolean | null} areaCodeHasMultipleTimezones
+ * @property {boolean} estimatedTime
+ * @property {StateInfo} [state]
+ * @property {RegionInfo} [region]
+ * @property {string} [localTimeReadable]
+ * @property {string} [localTime24Hour]
+ * @property {boolean} [isTCPAQuietHours]
+ * @property {boolean} [isCRTCQuietHours]
+ * @property {boolean} [isQuietHours]
+ */
+
+/**
+ * @typedef {import('./base.js').PhoneNumberInText & (AreaCodeTimeInfo | RegionInfo | null)} PhoneNumberWithGeoInfo
+ */
+
+/**
  * Determines whether the given date is within daylight saving time for the local time zone.
  *
  * This function compares the timezone offsets of January 1st and July 1st of the given year.
@@ -78,12 +120,7 @@ export function offsetTieBreaker(timezones, date) {
  * @param {string} offset - The UTC offset in the format "+HH:MM" or "-HH:MM".
  * @param {Date} date - The date object for which to calculate the local time.
  * @param {string} stateName - The state in which the area code is located.
- * @returns {Object} An object containing local time details.
- * @returns {string} return.localTimeReadable - The local time as a readable string in 12-hour format.
- * @returns {string} return.localTime24Hour - The local time as a string in 24-hour format.
- * @returns {boolean} return.isTCPAQuietHours - Indicates whether the local time falls outside TCPA quiet hours (US).
- * @returns {boolean} return.isCRTCQuietHours - Indicates whether the local time falls outside CRTC quiet hours (Canada).
- * @returns {boolean} return.isQuietHours - Indicates whether the local time falls outside either TCPA or CRTC quiet hours.
+ * @returns {TimeDetails} An object containing local time details and quiet-hours flags.
  */
 export function findTimeDetails(offset, date, stateName) {
   const localTime = new Date(
@@ -136,7 +173,7 @@ export function findTimeDetails(offset, date, stateName) {
  *
  * @param {string} areaCode - The valid area code to determine the timezone for.
  * @param {Date} [date=new Date()] - The date object used to determine the local time and daylight saving time. Defaults to the current date if not provided.
- * @returns {string} - The formatted timezone offset in the format "±HH:MM".
+ * @returns {AreaCodeTimeInfo} Timezone, daylight-saving, and quiet-hours details for the area code.
  */
 export function findTimeFromAreaCode(areaCode, date = new Date()) {
   let localOffset;
@@ -231,12 +268,9 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
 /**
  * Finds and returns the region name corresponding to a given region code.
  *
- * @param {string} regionCode - The code representing the region.
- * @param {string} areaCode - Optionally, the area code if regionCode is 1 - to distinguish between US, Canada and other NANP regions.
- * @returns {Object} An object containing local region details.
- * @returns {string | undefined} The name of the region if found, otherwise `undefined`.
- * @returns {string | undefined} The 2-letter code of the region if found, otherwise `undefined`.
- * @returns {string | undefined} The emoji flag of the region if found, otherwise `undefined`.
+ * @param {string | number} regionCode - The code representing the region.
+ * @param {string} [areaCode] - Optional NANP area code used to disambiguate region `1`.
+ * @returns {RegionInfo | null | undefined} Region details when the calling code exists.
  */
 export function findRegionFromRegionCode(regionCode, areaCode) {
   const regionInfo = REGION_CODES[regionCode];
@@ -261,8 +295,7 @@ export function findRegionFromRegionCode(regionCode, areaCode) {
  *
  * @param {string} text - The text to search for phone numbers.
  * @param {Date} [date=new Date()] - The date to use for determining time zone information. Defaults to the current date.
- * @returns {Array<object>} An array of objects, where each object represents a found phone number
- * and includes details from `findNumbersInString` as well as geographical and/or time zone information.
+ * @returns {PhoneNumberWithGeoInfo[]} Matched phone numbers enriched with geography or timezone details.
  */
 export function findAllNumbersInfoInString(text, date = new Date()) {
   const numbers = findNumbersInString(text);

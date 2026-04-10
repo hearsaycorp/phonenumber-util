@@ -1,7 +1,13 @@
-// We have a lot of US / Canada numbers.  Just define them once to avoid redundant code.
+/** Shared region metadata for US area-code entries. */
 const UNITED_STATES = { name: 'United States', code: 'US', flag: '🇺🇸' };
+/** Shared region metadata for Canadian area-code entries. */
 const CANADA = { name: 'Canada', code: 'CA', flag: '🇨🇦' };
 
+/**
+ * Mapping of NANP area codes to state/province and region metadata.
+ *
+ * @type {Record<string, { name: string, code?: string, region: { name: string, code: string, flag?: string } }>}
+ */
 export const AREA_CODES = {
   // Toll Free / Not Geographic
   800: { name: 'Toll-free', region: { name: 'United States', code: 'US' } },
