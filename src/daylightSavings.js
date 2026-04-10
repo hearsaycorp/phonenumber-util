@@ -7,11 +7,10 @@
 export const STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS = [
   'Arizona',
   'Hawaii',
-  'British Columbia',
   'Puerto Rico',
   'Saskatchewan',
   'Virgin Islands',
-  'Yukon, Northwest Territories, and Nunavut',
+  'Yukon',
 ];
 
 /**
@@ -29,7 +28,28 @@ export const AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS = {
   257: 'British Columbia',
   672: 'British Columbia',
   778: 'British Columbia',
-  306: 'Saskatchewan',
-  474: 'Saskatchewan',
-  639: 'Saskatchewan',
 };
+
+/**
+ * Area codes that can resolve to more than one local offset during summer.
+ *
+ * @type {Set<string>}
+ */
+export const AREA_CODES_WITH_SUMMER_TIME_OPTIONS = new Set([
+  '236',
+  '250',
+  '257',
+  '672',
+  '778',
+]);
+
+/**
+ * Area codes that can resolve to more than one local offset during winter.
+ *
+ * @type {Set<string>}
+ */
+export const AREA_CODES_WITH_WINTER_TIME_OPTIONS = new Set([
+  '306',
+  '474',
+  '639',
+]);

@@ -172,12 +172,12 @@ const canadianPhone = {
   areaCodeHasMultipleTimezones: true,
   daylightSavings: true,
   estimatedTime: true,
-  isQuietHours: false,
-  isCRTCQuietHours: false,
-  localTime24Hour: '10:00:00',
-  localTimeReadable: '10:00:00 AM',
+  isQuietHours: true,
+  isCRTCQuietHours: true,
+  localTime24Hour: '09:00:00',
+  localTimeReadable: '9:00:00 AM',
   stateHasMultipleTimezones: true,
-  timezoneOffset: '-05:00',
+  timezoneOffset: '-06:00',
   state: {
     name: 'British Columbia',
     code: 'BC',
@@ -517,6 +517,14 @@ describe('Provides compliance quiet hours for any given region', () => {
       findTimeDetails('-07:00', new Date('2024-07-20T07:00:00'), 'Alberta')
         .isCRTCQuietHours,
     ).toEqual(true);
+    expect(
+      findTimeDetails('-05:00', new Date('2026-01-06T02:15:00.000Z'), 'Ontario')
+        .isCRTCQuietHours,
+    ).toEqual(false);
+    expect(
+      findTimeDetails('-05:00', new Date('2026-01-06T02:31:00.000Z'), 'Ontario')
+        .isCRTCQuietHours,
+    ).toEqual(true);
 
     // Both should have an abstracted general quiet hours value.
     expect(
@@ -559,6 +567,21 @@ describe('Provides general time information for the given phone number (US and C
     expect(
       findTimeFromAreaCode('236', new Date('2024-07-20T08:00:00')),
     ).toEqual(canadianPhone);
+    expect(
+      findTimeFromAreaCode('867', new Date('2024-07-15T08:00:00')),
+    ).toEqual({
+      ...invalidPhone,
+      estimatedTime: true,
+      state: {
+        name: 'Yukon, Northwest Territories, and Nunavut',
+        code: 'YT/NT/NU',
+      },
+      region: {
+        name: 'Canada',
+        code: 'CA',
+        flag: '🇨🇦',
+      },
+    });
   });
 });
 
