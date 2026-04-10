@@ -5,7 +5,7 @@ export interface PhoneParts {
   formattedNumber: string | null;
   href: string | null;
   localNumber: string | null;
-  rawNumber: string;
+  rawNumber: string | undefined;
   regionCode: string | null;
 }
 

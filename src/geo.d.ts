@@ -1,12 +1,12 @@
 export interface RegionInfo {
   name: string;
   code: string;
-  flag: string;
+  flag?: string;
 }
 
 export interface StateInfo {
   name: string;
-  code: string;
+  code?: string;
 }
 
 export interface TimeDetails {
@@ -23,8 +23,8 @@ export interface AreaCodeTimeInfo {
   stateHasMultipleTimezones: boolean | null;
   areaCodeHasMultipleTimezones: boolean | null;
   estimatedTime: boolean;
-  state?: StateInfo;
-  region?: RegionInfo;
+  state?: StateInfo | undefined;
+  region?: RegionInfo | undefined;
   localTimeReadable?: string;
   localTime24Hour?: string;
   isTCPAQuietHours?: boolean;
@@ -43,7 +43,7 @@ export interface PhoneNumberWithGeoInfo {
   localNumber: string | null;
   rawNumber: string | undefined; // Can be undefined, matches base PhoneParts
   regionCode: string | null;
-  // Geo-specific fields (all present in actual return)
+  // Geo-specific fields may be absent when no geographic enrichment is available.
   timezoneOffset?: string | null;
   daylightSavings?: boolean | null;
   stateHasMultipleTimezones?: boolean | null;
@@ -78,7 +78,7 @@ export function findTimeFromAreaCode(
 export function findRegionFromRegionCode(
   regionCode: string | number,
   areaCode?: string
-): RegionInfo | null;
+): RegionInfo | undefined;
 
 export function findAllNumbersInfoInString(
   text: string,
