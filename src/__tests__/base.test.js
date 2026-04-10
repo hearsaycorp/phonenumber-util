@@ -73,6 +73,14 @@ describe('Region code mapping', () => {
   it('handles a number is definitely not a phone number', () => {
     expect(getPhoneParts('7/23/2025').formattedNumber).toBeNull();
   });
+
+  it('handles empty-string input', () => {
+    const phoneParts = getPhoneParts('');
+
+    expect(phoneParts.rawNumber).toBe('');
+    expect(phoneParts.formattedNumber).toBeNull();
+    expect(phoneParts.regionCode).toBeNull();
+  });
 });
 
 describe('Sanitizing user inputted phone number values', () => {
@@ -145,6 +153,15 @@ describe('Extracting numbers from a larger string of text', () => {
 
   it('should return empty array for empty string input', () => {
     expect(findNumbersInString('')).toEqual([]);
+  });
+
+  it('should ignore malformed values mixed with valid phone numbers', () => {
+    const output = findNumbersInString(
+      'Noise 7/23/2025, valid +1 206 555 7890, broken +1 420 222 3333',
+    );
+
+    expect(output).toHaveLength(1);
+    expect(output[0].e164).toBe('+12065557890');
   });
 });
 

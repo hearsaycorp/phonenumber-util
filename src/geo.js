@@ -95,6 +95,31 @@ export function formatTimeOffset(offset) {
 }
 
 /**
+ * Shifts a UTC offset by a number of whole hours while preserving minute
+ * precision for half-hour regions.
+ *
+ * @param {string} offset - The UTC offset in the format "+HH:MM" or "-HH:MM".
+ * @param {number} hours - The number of hours to add to the offset.
+ * @returns {string} - The shifted offset in ISO 8601-compatible format.
+ */
+export function shiftTimeOffset(offset, hours) {
+  const sign = offset.startsWith('-') ? -1 : 1;
+  const [offsetHours, offsetMinutes] = offset
+    .replace(/^[+-]/, '')
+    .split(':')
+    .map((value) => parseInt(value, 10));
+  const totalMinutes = sign * (offsetHours * 60 + offsetMinutes) + hours * 60;
+  const shiftedSign = totalMinutes < 0 ? '-' : '+';
+  const absoluteMinutes = Math.abs(totalMinutes);
+  const shiftedHours = Math.floor(absoluteMinutes / 60);
+  const shiftedRemainderMinutes = absoluteMinutes % 60;
+
+  return formatTimeOffset(
+    `${shiftedSign}${shiftedHours}:${String(shiftedRemainderMinutes).padStart(2, '0')}`,
+  );
+}
+
+/**
  * Determines the appropriate timezone offset when there are multiple possibilities, based on the time of day.
  *
  * When given a list of timezones for an area code that spans multiple timezones, this function biases the selection
@@ -278,31 +303,28 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
     !AREA_CODES_WITH_SUMMER_TIME_OPTIONS.has(areaCode) &&
     !AREA_CODES_WITH_WINTER_TIME_OPTIONS.has(areaCode)
   ) {
-    const offset = parseInt(localOffset.split(':')[0]);
-
     if (inDaylightSavingTime) {
       returnTime.daylightSavings = true;
       // During daylight savings, parts of this area code will be adhering and other parts not.
       // We'll take the most _conservative_ time within the two options.
-      localOffset = offsetTieBreaker([`${offset + 1}:00`, localOffset], date);
+      localOffset = offsetTieBreaker(
+        [shiftTimeOffset(localOffset, 1), localOffset],
+        date,
+      );
       returnTime.estimatedTime = true;
     } else {
       // Nothing to change - the entire area code is at the same time.
       returnTime.daylightSavings = false;
-      localOffset = `${offset}:00`;
     }
   } else if (
     !handledSeasonalOffset &&
     !STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS.includes(stateName)
   ) {
-    const offset = parseInt(localOffset.split(':')[0]);
-
     if (inDaylightSavingTime) {
       returnTime.daylightSavings = true;
-      localOffset = `${offset + 1}:00`;
+      localOffset = shiftTimeOffset(localOffset, 1);
     } else {
       returnTime.daylightSavings = false;
-      localOffset = `${offset}:00`;
     }
   } else if (!handledSeasonalOffset) {
     returnTime.daylightSavings = false;

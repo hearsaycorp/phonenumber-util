@@ -1,6 +1,7 @@
 import {
   isDaylightSavingTime,
   formatTimeOffset,
+  shiftTimeOffset,
   offsetTieBreaker,
   findTimeDetails,
   findTimeFromAreaCode,
@@ -470,6 +471,14 @@ describe('Formatting time offset', () => {
   });
 });
 
+describe('Shifting time offset', () => {
+  it('preserves minute precision while shifting offsets', () => {
+    expect(shiftTimeOffset('-03:30', 1)).toBe('-02:30');
+    expect(shiftTimeOffset('+05:30', -1)).toBe('+04:30');
+    expect(shiftTimeOffset('-00:30', 1)).toBe('+00:30');
+  });
+});
+
 describe('Errs on the side of caution, minimizing the given time options to the more narrow', () => {
   it('Late at night, the available options for morning should be later', () => {
     expect(
@@ -550,6 +559,71 @@ describe('Provides compliance quiet hours for any given region', () => {
         .isQuietHours,
     ).toEqual(true);
   });
+
+  it('handles exact TCPA and CRTC boundary times', () => {
+    expect(
+      findTimeDetails(
+        '-08:00',
+        new Date('2026-01-06T15:59:00.000Z'),
+        'California',
+      ).isTCPAQuietHours,
+    ).toEqual(true);
+    expect(
+      findTimeDetails(
+        '-08:00',
+        new Date('2026-01-06T16:00:00.000Z'),
+        'California',
+      ).isTCPAQuietHours,
+    ).toEqual(false);
+    expect(
+      findTimeDetails(
+        '-08:00',
+        new Date('2026-01-07T04:59:00.000Z'),
+        'California',
+      ).isTCPAQuietHours,
+    ).toEqual(false);
+    expect(
+      findTimeDetails(
+        '-08:00',
+        new Date('2026-01-07T05:00:00.000Z'),
+        'California',
+      ).isTCPAQuietHours,
+    ).toEqual(true);
+
+    expect(
+      findTimeDetails('-05:00', new Date('2026-01-03T14:59:00.000Z'), 'Ontario')
+        .isCRTCQuietHours,
+    ).toEqual(true);
+    expect(
+      findTimeDetails('-05:00', new Date('2026-01-03T15:00:00.000Z'), 'Ontario')
+        .isCRTCQuietHours,
+    ).toEqual(false);
+    expect(
+      findTimeDetails('-05:00', new Date('2026-01-03T22:59:00.000Z'), 'Ontario')
+        .isCRTCQuietHours,
+    ).toEqual(false);
+    expect(
+      findTimeDetails('-05:00', new Date('2026-01-03T23:00:00.000Z'), 'Ontario')
+        .isCRTCQuietHours,
+    ).toEqual(true);
+  });
+
+  it('handles positive and half-hour offsets', () => {
+    expect(
+      findTimeDetails(
+        '+05:30',
+        new Date('2026-01-06T03:29:00.000Z'),
+        'California',
+      ).localTime24Hour,
+    ).toEqual('08:59:00');
+    expect(
+      findTimeDetails(
+        '+10:00',
+        new Date('2026-01-06T11:00:00.000Z'),
+        'California',
+      ).localTime24Hour,
+    ).toEqual('21:00:00');
+  });
 });
 
 describe('Provides general time information for the given phone number (US and Canada only)', () => {
@@ -597,6 +671,85 @@ describe('Provides general time information for the given phone number (US and C
       },
     });
   });
+
+  it('returns Newfoundland and Labrador details for both overlays', () => {
+    expect(
+      findTimeFromAreaCode('709', new Date('2026-01-06T12:30:00.000Z')),
+    ).toEqual(
+      expect.objectContaining({
+        timezoneOffset: '-03:30',
+        daylightSavings: false,
+        state: {
+          name: 'Newfoundland and Labrador',
+          code: 'NL',
+        },
+        region: {
+          name: 'Canada',
+          code: 'CA',
+          flag: '🇨🇦',
+        },
+      }),
+    );
+    expect(
+      findTimeFromAreaCode('879', new Date('2026-01-06T12:30:00.000Z')),
+    ).toEqual(
+      expect.objectContaining({
+        timezoneOffset: '-03:30',
+        daylightSavings: false,
+        state: {
+          name: 'Newfoundland and Labrador',
+          code: 'NL',
+        },
+      }),
+    );
+  });
+
+  it('handles seasonal area-code option sets as expected', () => {
+    expect(
+      findTimeFromAreaCode('236', new Date('2026-01-06T16:00:00.000Z')),
+    ).toEqual(
+      expect.objectContaining({
+        timezoneOffset: '-07:00',
+        estimatedTime: false,
+        daylightSavings: false,
+      }),
+    );
+    expect(
+      findTimeFromAreaCode('236', new Date('2026-07-06T15:00:00.000Z')),
+    ).toEqual(
+      expect.objectContaining({
+        stateHasMultipleTimezones: true,
+        areaCodeHasMultipleTimezones: true,
+        estimatedTime: true,
+        daylightSavings: true,
+      }),
+    );
+    expect(
+      findTimeFromAreaCode('306', new Date('2026-07-06T14:00:00.000Z')),
+    ).toEqual(
+      expect.objectContaining({
+        timezoneOffset: '-06:00',
+        estimatedTime: false,
+        daylightSavings: false,
+      }),
+    );
+    expect(
+      findTimeFromAreaCode('306', new Date('2026-01-06T14:00:00.000Z')),
+    ).toEqual(
+      expect.objectContaining({
+        stateHasMultipleTimezones: true,
+        areaCodeHasMultipleTimezones: true,
+        estimatedTime: true,
+        daylightSavings: false,
+      }),
+    );
+  });
+
+  it('returns the invalid shape for unsupported area codes', () => {
+    expect(
+      findTimeFromAreaCode('000', new Date('2026-01-06T12:00:00.000Z')),
+    ).toEqual(invalidPhone);
+  });
 });
 
 describe('Provides region name for a given region code', () => {
@@ -610,6 +763,10 @@ describe('Provides region name for a given region code', () => {
     expect(findRegionFromRegionCode(31).name).toEqual('Netherlands');
     expect(findRegionFromRegionCode(32).name).toEqual('Belgium');
     expect(findRegionFromRegionCode(33).name).toEqual('France');
+  });
+
+  it('returns undefined for unsupported region codes', () => {
+    expect(findRegionFromRegionCode(999)).toBeUndefined();
   });
 });
 
