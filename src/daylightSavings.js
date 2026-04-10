@@ -29,3 +29,27 @@ export const AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS = {
   672: 'British Columbia',
   778: 'British Columbia',
 };
+
+/**
+ * Area codes that can resolve to more than one local offset during summer.
+ *
+ * @type {Set<string>}
+ */
+export const AREA_CODES_WITH_SUMMER_TIME_OPTIONS = new Set([
+  '236',
+  '250',
+  '257',
+  '672',
+  '778',
+]);
+
+/**
+ * Area codes that can resolve to more than one local offset during winter.
+ *
+ * @type {Set<string>}
+ */
+export const AREA_CODES_WITH_WINTER_TIME_OPTIONS = new Set([
+  '306',
+  '474',
+  '639',
+]);

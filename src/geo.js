@@ -11,10 +11,10 @@ import {
 import {
   STATES_THAT_DONT_HAVE_DAYLIGHT_SAVINGS,
   AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS,
+  AREA_CODES_WITH_SUMMER_TIME_OPTIONS,
+  AREA_CODES_WITH_WINTER_TIME_OPTIONS,
 } from './daylightSavings.js';
 import { findNumbersInString } from './base.js';
-
-const SASKATCHEWAN_TIME_OPTION_AREA_CODES = new Set(['306', '474', '639']);
 
 /**
  * @typedef {Object} RegionInfo
@@ -217,10 +217,7 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
 
   // Most of British Columbia is now UTC-7 year-round, but these overlays also
   // cover southeastern communities that align with Alberta in summer.
-  if (
-    stateName === 'British Columbia' &&
-    AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS[areaCode]
-  ) {
+  if (AREA_CODES_WITH_SUMMER_TIME_OPTIONS.has(areaCode)) {
     returnTime.stateHasMultipleTimezones = true;
     returnTime.areaCodeHasMultipleTimezones = inDaylightSavingTime;
     returnTime.daylightSavings = inDaylightSavingTime;
@@ -233,11 +230,7 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
 
   // Saskatchewan is mostly UTC-6 year-round, but some communities align with
   // Alberta in winter while others observe summer daylight saving time.
-  if (
-    !localOffset &&
-    stateName === 'Saskatchewan' &&
-    SASKATCHEWAN_TIME_OPTION_AREA_CODES.has(areaCode)
-  ) {
+  if (!localOffset && AREA_CODES_WITH_WINTER_TIME_OPTIONS.has(areaCode)) {
     returnTime.stateHasMultipleTimezones = true;
     returnTime.areaCodeHasMultipleTimezones = !inDaylightSavingTime;
     returnTime.daylightSavings = false;
@@ -277,8 +270,8 @@ export function findTimeFromAreaCode(areaCode, date = new Date()) {
   if (
     !handledSeasonalOffset &&
     AREA_CODES_WITH_MULTIPLE_DAYLIGHT_SAVINGS[areaCode] &&
-    stateName !== 'British Columbia' &&
-    stateName !== 'Saskatchewan'
+    !AREA_CODES_WITH_SUMMER_TIME_OPTIONS.has(areaCode) &&
+    !AREA_CODES_WITH_WINTER_TIME_OPTIONS.has(areaCode)
   ) {
     const offset = parseInt(localOffset.split(':')[0]);
 
