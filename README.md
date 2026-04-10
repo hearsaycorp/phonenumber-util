@@ -3,7 +3,7 @@ Utility for extracting and validating phone numbers. Extracts an array of phone 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Install from NPM](https://img.shields.io/badge/npm-@yext/phonenumber--util-blue)](https://www.npmjs.com/package/@yext/phonenumber-util)
 ![Statements](https://img.shields.io/badge/statements-100%25-brightgreen.svg?style=flat)
-![Branches](https://img.shields.io/badge/branches-98.92%25-brightgreen.svg?style=flat)
+![Branches](https://img.shields.io/badge/branches-98.4%25-brightgreen.svg?style=flat)
 ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat)
 ![Lines](https://img.shields.io/badge/lines-100%25-brightgreen.svg?style=flat)
 
